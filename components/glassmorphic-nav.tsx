@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Menu, X, Moon, Sparkles, Sunset, Waves } from 'lucide-react'
 
 const NAV_ITEMS = [
+  { label: 'About', href: '#about' },
   { label: 'Services', href: '#services' },
   { label: 'Tools', href: '#tools' },
   { label: 'Work', href: '#work' },
