@@ -50,41 +50,41 @@
 
 :root {
   color-scheme: dark;
-  --background: #0a1a15;
-  --foreground: #e8f5f1;
-  --card: #0f2921;
-  --card-foreground: #e8f5f1;
-  --popover: #0f2921;
-  --popover-foreground: #e8f5f1;
-  --primary: #00e5d0;
-  --primary-foreground: #0a1a15;
-  --secondary: #14b8a6;
-  --secondary-foreground: #e8f5f1;
-  --muted: #1a3b35;
-  --muted-foreground: #7dd3c0;
-  --accent: #06d6a0;
-  --accent-foreground: #0a1a15;
+  --background: #08080c;
+  --foreground: #ededf2;
+  --card: #121218;
+  --card-foreground: #ededf2;
+  --popover: #121218;
+  --popover-foreground: #ededf2;
+  --primary: #a855f7;
+  --primary-foreground: #ffffff;
+  --secondary: #7c3aed;
+  --secondary-foreground: #ededf2;
+  --muted: #1c1c24;
+  --muted-foreground: #9b9ba6;
+  --accent: #c084fc;
+  --accent-foreground: #08080c;
   --destructive: #ff4757;
-  --border: #1a3b35 / 40%;
-  --input: #1a3b35 / 60%;
-  --ring: #00e5d0;
-  --chart-1: #00e5d0;
-  --chart-2: #06d6a0;
-  --chart-3: #14b8a6;
-  --chart-4: #ffd700;
-  --chart-5: #ff9500;
+  --border: #2a2a36 / 60%;
+  --input: #2a2a36 / 70%;
+  --ring: #a855f7;
+  --chart-1: #a855f7;
+  --chart-2: #c084fc;
+  --chart-3: #7c3aed;
+  --chart-4: #d8b4fe;
+  --chart-5: #9333ea;
   --radius: 0.625rem;
-  --sidebar: #0f2921;
-  --sidebar-foreground: #e8f5f1;
-  --sidebar-primary: #00e5d0;
-  --sidebar-primary-foreground: #0a1a15;
-  --sidebar-accent: #06d6a0;
-  --sidebar-accent-foreground: #0a1a15;
-  --sidebar-border: #1a3b35 / 40%;
-  --sidebar-ring: #00e5d0;
-  --firefly-yellow: #ffd700;
-  --emerald-dark: #0a1a15;
-  --cyan-glow: #00e5d0;
+  --sidebar: #121218;
+  --sidebar-foreground: #ededf2;
+  --sidebar-primary: #a855f7;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #c084fc;
+  --sidebar-accent-foreground: #08080c;
+  --sidebar-border: #2a2a36 / 60%;
+  --sidebar-ring: #a855f7;
+  --firefly-yellow: #a855f7;
+  --emerald-dark: #08080c;
+  --cyan-glow: #a855f7;
 }
 
 .dark {
@@ -238,21 +238,27 @@
   }
 
   .glassmorphic {
-    background: rgba(15, 41, 33, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 229, 208, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    background: rgba(18, 18, 24, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(168, 85, 247, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
   }
 
   .glassmorphic-hover {
-    background: rgba(15, 41, 33, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 229, 208, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    @apply transition-all duration-300 hover:border-primary/40 hover:bg-[rgba(15,41,33,0.8)] hover:shadow-[0_8px_32px_0_rgba(0,229,208,0.1)];
+    background: rgba(18, 18, 24, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(168, 85, 247, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    @apply transition-all duration-300 hover:border-primary/40 hover:bg-[rgba(18,18,24,0.85)] hover:shadow-[0_8px_32px_0_rgba(168,85,247,0.15)];
   }
 
   .ambient-glow {
-    background: radial-gradient(circle at center, rgba(0, 229, 208, 0.1) 0%, rgba(0, 229, 208, 0.05) 30%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(168, 85, 247, 0.12) 0%, rgba(168, 85, 247, 0.05) 30%, transparent 70%);
+  }
+
+  .terminal-frame {
+    background: rgba(18, 18, 24, 0.6);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    box-shadow: 0 0 40px 0 rgba(168, 85, 247, 0.08);
   }
 }

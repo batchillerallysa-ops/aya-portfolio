@@ -35,7 +35,7 @@ export function GlassmorphicNav() {
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-500 group-hover:shadow-[0_0_20px_rgba(0,229,208,0.5)] transition-shadow duration-300" />
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary group-hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transition-shadow duration-300" />
             <span className="font-heading font-bold text-lg text-primary group-hover:text-primary/90 transition-colors">
               Allysa
             </span>
@@ -73,7 +73,7 @@ export function GlassmorphicNav() {
             href="https://calendly.com/allysa-batchiller57/30min"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:block px-4 py-2 text-sm font-medium text-primary-foreground bg-gradient-to-r from-primary to-accent rounded-full hover:shadow-[0_0_20px_rgba(0,229,208,0.4)] transition-all duration-300 hover:scale-105"
+            className="hidden sm:block px-5 py-2 text-sm font-medium text-primary-foreground bg-gradient-to-r from-primary to-secondary rounded-full hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all duration-300 hover:scale-105"
           >
             Book a call
           </Link>

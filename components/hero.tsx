@@ -22,7 +22,15 @@ export function Hero() {
         }}
       />
       <div className="mx-auto max-w-6xl px-5 pb-16 sm:px-8 sm:pb-24">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center justify-between gap-4">
+          <span className="font-mono text-sm font-semibold text-primary">{">_"}</span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+            System: Online
+          </span>
+        </div>
+        <div className="mt-4 h-px w-full bg-gradient-to-r from-primary/40 via-border to-transparent" />
+
+        <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
           <span className="relative flex h-2.5 w-2.5">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
@@ -32,7 +40,7 @@ export function Hero() {
 
         <h1 className="mt-6 max-w-4xl text-balance font-heading text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl">
           I help teams reclaim hours with{" "}
-          <span className="bg-gradient-to-r from-primary via-accent to-cyan-400 bg-clip-text text-transparent">workflow &amp; AI automation</span>.
+          <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">workflow &amp; AI automation</span>.
         </h1>
 
         <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">
@@ -70,14 +78,14 @@ export function Hero() {
         </dl>
 
         <div className="mt-12">
-          <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-            Tools I work with
+          <p className="font-mono text-xs font-medium uppercase tracking-[0.25em] text-muted-foreground">
+            {"// Tools I work with"}
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {TOOLS.map((tool) => (
               <span
                 key={tool}
-                className="rounded-full border border-border bg-card px-3.5 py-1.5 text-sm text-foreground/90"
+                className="rounded-full border border-primary/25 bg-primary/5 px-3.5 py-1.5 text-sm text-foreground/90 transition-colors hover:border-primary/50"
               >
                 {tool}
               </span>
