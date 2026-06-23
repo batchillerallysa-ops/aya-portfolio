@@ -85,28 +85,28 @@ export function About() {
           </motion.div>
 
           {/* Right: content */}
-          <motion.div variants={slideInFromRightVariants}>
-            <motion.p className="font-mono text-sm font-medium uppercase tracking-[0.25em] text-primary" variants={staggerItemVariants}>
+          <motion.div className="rounded-2xl border-2 border-cyan-400/40 bg-slate-950/85 p-10 backdrop-blur-2xl shadow-2xl" variants={slideInFromRightVariants}>
+            <motion.p className="font-mono text-base font-bold uppercase tracking-[0.3em] text-cyan-300" variants={staggerItemVariants}>
               {"// About AM Batchiller"}
             </motion.p>
-            <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl" variants={staggerItemVariants}>
+            <motion.h2 className="mt-4 text-balance font-heading text-4xl font-bold tracking-tight text-white sm:text-5xl" variants={staggerItemVariants}>
               A decade of operations & analysis
             </motion.h2>
-            <motion.p className="mt-5 text-pretty leading-relaxed text-foreground/90" variants={staggerItemVariants}>
+            <motion.p className="mt-6 text-pretty leading-relaxed text-white text-lg font-light" variants={staggerItemVariants}>
               I&apos;m AM Batchiller, a dedicated automation specialist passionate about transforming how teams work. With extensive experience in workflow optimization and system integration, I craft solutions that save time and streamline operations for businesses of all sizes.
             </motion.p>
-            <motion.p className="mt-4 text-pretty leading-relaxed text-foreground/90" variants={staggerItemVariants}>
+            <motion.p className="mt-5 text-pretty leading-relaxed text-white text-lg font-light" variants={staggerItemVariants}>
               My approach combines technical expertise with a deep understanding of business processes. I believe the best automations are invisible — they work seamlessly in the background while you focus on what matters most.
             </motion.p>
 
             {/* role badges */}
-            <motion.div className="mt-6 flex flex-wrap gap-2" variants={staggerContainerVariants}>
+            <motion.div className="mt-7 flex flex-wrap gap-3" variants={staggerContainerVariants}>
               {ROLES.map((role) => (
                 <motion.span
                   key={role}
-                  className="rounded-full border border-primary/40 bg-primary/15 px-3.5 py-1.5 text-sm text-foreground/95 backdrop-blur-sm transition-colors hover:border-primary/60 hover:bg-primary/25 cursor-pointer"
+                  className="rounded-full border-2 border-cyan-400/70 bg-cyan-900/40 px-4 py-2 text-base text-white font-semibold backdrop-blur-md transition-all hover:border-cyan-300 hover:bg-cyan-800/50 cursor-pointer shadow-lg"
                   variants={staggerItemVariants}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.08 }}
                 >
                   {role}
                 </motion.span>
@@ -114,16 +114,16 @@ export function About() {
             </motion.div>
 
             {/* stat cards */}
-            <motion.div className="mt-8 grid grid-cols-3 gap-3" variants={staggerContainerVariants}>
+            <motion.div className="mt-8 grid grid-cols-3 gap-4" variants={staggerContainerVariants}>
               {STATS.map((stat) => (
                 <motion.div
                   key={stat.label}
-                  className="rounded-xl border border-border/40 bg-card/40 p-4 text-center backdrop-blur-sm hover:border-primary/50 hover:bg-card/60 cursor-pointer transition-all"
+                  className="rounded-xl border-2 border-white/25 bg-white/10 p-5 text-center backdrop-blur-md hover:border-cyan-400/60 hover:bg-cyan-500/20 cursor-pointer transition-all shadow-lg"
                   variants={staggerItemVariants}
-                  whileHover={{ scale: 1.08 }}
+                  whileHover={{ scale: 1.1 }}
                 >
-                  <p className="font-heading text-2xl font-bold text-primary">{stat.value}</p>
-                  <p className="mt-1 text-xs leading-snug text-foreground/80">{stat.label}</p>
+                  <p className="font-heading text-3xl font-bold text-cyan-300">{stat.value}</p>
+                  <p className="mt-2 text-sm leading-snug text-white/95 font-medium">{stat.label}</p>
                 </motion.div>
               ))}
             </motion.div>
