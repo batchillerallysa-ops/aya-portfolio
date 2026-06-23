@@ -1,6 +1,5 @@
 import { GlassmorphicNav } from "@/components/glassmorphic-nav"
 import { Hero } from "@/components/hero"
-import { About } from "@/components/about"
 import { Services } from "@/components/services"
 import { Experience } from "@/components/experience"
 import { Work } from "@/components/work"
@@ -15,7 +14,6 @@ export default function Home() {
       <GlassmorphicNav />
       <main>
         <Hero />
-        <About />
         <Services />
         <ToolsMarquee />
         <Experience />
