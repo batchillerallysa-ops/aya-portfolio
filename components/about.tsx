@@ -1,9 +1,9 @@
 'use client'
 
 import Link from "next/link"
-import { ArrowRight, Mail, Zap, Database, Users, Target } from "lucide-react"
+import { ArrowRight, Mail } from "lucide-react"
 import { motion } from "framer-motion"
-import { staggerContainerVariants, staggerItemVariants } from "@/lib/animations"
+import { staggerContainerVariants, staggerItemVariants, slideInFromLeftVariants, slideInFromRightVariants } from "@/lib/animations"
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -13,37 +13,12 @@ function LinkedInIcon({ className }: { className?: string }) {
   )
 }
 
-const ABOUT_ITEMS = [
-  {
-    icon: Zap,
-    title: "Strategic Mindset",
-    description:
-      "I approach automation with a business-first perspective, focusing on ROI and long-term operational efficiency rather than quick fixes.",
-  },
-  {
-    icon: Database,
-    title: "Technical Excellence",
-    description:
-      "With deep expertise in data management, process mapping, and system architecture, I build automations that scale and perform reliably.",
-  },
-  {
-    icon: Users,
-    title: "User-Centric Design",
-    description:
-      "Every automation is designed with end-users in mind. Complex workflows that feel simple and intuitive to operate.",
-  },
-  {
-    icon: Target,
-    title: "Results-Driven",
-    description:
-      "I measure success by impact: faster turnaround times, error-free operations, and teams empowered to focus on high-value work.",
-  },
-]
+const ROLES = ["Virtual Assistant", "Workflow Automation", "Operations & Data", "AI Tooling"]
 
 const STATS = [
-  { value: "10+", label: "Years in Operations" },
-  { value: "500+", label: "Projects Delivered" },
-  { value: "99%", label: "Uptime Record" },
+  { value: "10+", label: "Years across ops & data" },
+  { value: "500+", label: "Accounts & records managed" },
+  { value: "25%", label: "Avg. efficiency gains" },
 ]
 
 export function About() {
@@ -56,94 +31,137 @@ export function About() {
         viewport={{ once: true, margin: "-100px" }}
         variants={staggerContainerVariants}
       >
-        {/* Header */}
-        <motion.div className="max-w-3xl" variants={staggerContainerVariants}>
-          <motion.p className="text-sm font-medium uppercase tracking-widest text-primary" variants={staggerItemVariants}>
-            {"// About AM Batchiller"}
-          </motion.p>
-          <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl" variants={staggerItemVariants}>
-            Dedicated to Excellence in Automation
-          </motion.h2>
-          <motion.p className="mt-4 text-pretty leading-relaxed text-muted-foreground" variants={staggerItemVariants}>
-            I'm AM Batchiller, a dedicated automation specialist passionate about transforming how teams work. With extensive experience in workflow optimization and system integration, I craft solutions that save time and streamline operations for businesses of all sizes.
-          </motion.p>
-        </motion.div>
+        <motion.div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16" variants={staggerContainerVariants}>
+          {/* Left: terminal-window photo frame */}
+          <motion.div className="relative mx-auto w-full max-w-md lg:mx-0" variants={slideInFromLeftVariants}>
+            {/* ambient glow behind the frame */}
+            <div className="ambient-glow pointer-events-none absolute -inset-6 -z-10 rounded-[2rem] blur-2xl" aria-hidden="true" />
 
-        {/* Core Values Grid */}
-        <motion.div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" variants={staggerContainerVariants}>
-          {ABOUT_ITEMS.map((item) => {
-            const Icon = item.icon
-            return (
-              <motion.div
-                key={item.title}
-                className="rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/50 cursor-pointer"
-                variants={staggerItemVariants}
-                whileHover={{ scale: 1.05, borderColor: "var(--primary)" }}
+            <div className="terminal-frame group relative overflow-hidden rounded-2xl border border-border/40 bg-card/60 backdrop-blur-sm">
+              {/* top accent bar */}
+              <div className="top-gradient-bar h-[3px] w-full" aria-hidden="true" />
+
+              {/* window title row */}
+              <div className="flex items-center gap-2 border-b border-border/60 px-4 py-3">
+                <span className="h-3 w-3 rounded-full bg-destructive/80" aria-hidden="true" />
+                <span className="h-3 w-3 rounded-full bg-secondary" aria-hidden="true" />
+                <span className="h-3 w-3 rounded-full bg-primary" aria-hidden="true" />
+                <span className="ml-2 font-mono text-xs text-foreground/70">allysa@portfolio: ~/about</span>
+              </div>
+
+              {/* photo area */}
+              <div
+                className="relative aspect-[4/5] w-full bg-gradient-to-br from-card/40 to-card/20"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle, color-mix(in srgb, var(--primary) 22%, transparent) 1px, transparent 1px)",
+                  backgroundSize: "18px 18px",
+                }}
               >
-                <motion.span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary" whileHover={{ scale: 1.2, rotate: 10 }}>
-                  <Icon className="h-5 w-5" />
-                </motion.span>
-                <h3 className="mt-5 font-heading text-lg font-semibold">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
-              </motion.div>
-            )
-          })}
-        </motion.div>
+                {/*
+                  SWAP ME: replace this placeholder with your photo.
+                  1. Add your image to /public (e.g. /public/allysa.jpg)
+                  2. Replace the block below with:
+                     <Image src="/allysa.jpg" alt="AM Batchiller" fill className="object-cover" />
+                     (import Image from "next/image")
+                */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center">
+                  <span className="flex h-16 w-16 items-center justify-center rounded-full border border-primary/40 bg-primary/10 font-mono text-2xl font-bold text-primary">
+                    {"</>"}
+                  </span>
+                  <p className="font-mono text-sm font-medium text-foreground">Your photo here</p>
+                  <p className="max-w-[15rem] text-xs leading-relaxed text-foreground/70">
+                    Drop a portrait into this frame to personalize your About section.
+                  </p>
+                </div>
 
-        {/* Stats Section */}
-        <motion.div className="mt-12 grid gap-4 sm:grid-cols-3" variants={staggerContainerVariants}>
-          {STATS.map((stat) => (
-            <motion.div
-              key={stat.label}
-              className="rounded-2xl border border-border bg-card/50 p-6 text-center hover:border-primary/50 cursor-pointer"
-              variants={staggerItemVariants}
-              whileHover={{ scale: 1.05 }}
-            >
-              <p className="font-heading text-3xl font-bold text-primary sm:text-4xl">{stat.value}</p>
-              <p className="mt-2 text-sm font-medium text-muted-foreground">{stat.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Philosophy */}
-        <motion.div className="mt-12 rounded-2xl border border-border bg-card/30 p-8" variants={staggerItemVariants}>
-          <motion.p className="text-lg leading-relaxed text-muted-foreground" variants={staggerItemVariants}>
-            My approach combines technical expertise with a deep understanding of business processes. I believe the best automations are invisible — they work seamlessly in the background while you focus on high-value work. Every solution I build is designed to scale, perform reliably, and adapt to your evolving needs.
-          </motion.p>
-        </motion.div>
-
-        {/* CTA Section */}
-        <motion.div className="mt-12 flex flex-wrap items-center justify-center gap-4" variants={staggerContainerVariants}>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} variants={staggerItemVariants}>
-            <Link
-              href="#contact"
-              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_0_24px_-4px] shadow-primary/60 transition-all duration-300 hover:shadow-[0_0_32px_0] hover:shadow-primary/70"
-            >
-              Let's Work Together
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
+                {/* glowing corner brackets */}
+                <span className="pointer-events-none absolute left-3 top-3 h-7 w-7 rounded-tl-lg border-l-2 border-t-2 border-primary/70" aria-hidden="true" />
+                <span className="pointer-events-none absolute right-3 top-3 h-7 w-7 rounded-tr-lg border-r-2 border-t-2 border-primary/70" aria-hidden="true" />
+                <span className="pointer-events-none absolute bottom-3 left-3 h-7 w-7 rounded-bl-lg border-b-2 border-l-2 border-primary/70" aria-hidden="true" />
+                <span className="pointer-events-none absolute bottom-3 right-3 h-7 w-7 rounded-br-lg border-b-2 border-r-2 border-primary/70" aria-hidden="true" />
+              </div>
+            </div>
           </motion.div>
 
-          <motion.div className="flex items-center gap-3" variants={staggerItemVariants}>
-            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="https://www.linkedin.com/in/allysa-batchiller"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary hover:bg-primary/5"
-              >
-                <LinkedInIcon className="h-5 w-5" />
-              </Link>
+          {/* Right: content */}
+          <motion.div variants={slideInFromRightVariants}>
+            <motion.p className="font-mono text-sm font-medium uppercase tracking-[0.25em] text-primary" variants={staggerItemVariants}>
+              {"// About AM Batchiller"}
+            </motion.p>
+            <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl" variants={staggerItemVariants}>
+              A decade of operations & analysis
+            </motion.h2>
+            <motion.p className="mt-5 text-pretty leading-relaxed text-foreground/90" variants={staggerItemVariants}>
+              I&apos;m AM Batchiller, a dedicated automation specialist passionate about transforming how teams work. With extensive experience in workflow optimization and system integration, I craft solutions that save time and streamline operations for businesses of all sizes.
+            </motion.p>
+            <motion.p className="mt-4 text-pretty leading-relaxed text-foreground/90" variants={staggerItemVariants}>
+              My approach combines technical expertise with a deep understanding of business processes. I believe the best automations are invisible — they work seamlessly in the background while you focus on what matters most.
+            </motion.p>
+
+            {/* role badges */}
+            <motion.div className="mt-6 flex flex-wrap gap-2" variants={staggerContainerVariants}>
+              {ROLES.map((role) => (
+                <motion.span
+                  key={role}
+                  className="rounded-full border border-primary/40 bg-primary/15 px-3.5 py-1.5 text-sm text-foreground/95 backdrop-blur-sm transition-colors hover:border-primary/60 hover:bg-primary/25 cursor-pointer"
+                  variants={staggerItemVariants}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  {role}
+                </motion.span>
+              ))}
             </motion.div>
-            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="mailto:allysa-batchiller57@example.com"
-                aria-label="Email"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary hover:bg-primary/5"
-              >
-                <Mail className="h-5 w-5" />
-              </Link>
+
+            {/* stat cards */}
+            <motion.div className="mt-8 grid grid-cols-3 gap-3" variants={staggerContainerVariants}>
+              {STATS.map((stat) => (
+                <motion.div
+                  key={stat.label}
+                  className="rounded-xl border border-border/40 bg-card/40 p-4 text-center backdrop-blur-sm hover:border-primary/50 hover:bg-card/60 cursor-pointer transition-all"
+                  variants={staggerItemVariants}
+                  whileHover={{ scale: 1.08 }}
+                >
+                  <p className="font-heading text-2xl font-bold text-primary">{stat.value}</p>
+                  <p className="mt-1 text-xs leading-snug text-foreground/80">{stat.label}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* CTA + socials */}
+            <motion.div className="mt-8 flex flex-wrap items-center gap-4" variants={staggerItemVariants}>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  href="#contact"
+                  className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_0_24px_-4px] shadow-primary/60 transition-all duration-300 hover:shadow-[0_0_32px_0] hover:shadow-primary/70"
+                >
+                  Get in touch
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </motion.div>
+
+              <div className="flex items-center gap-2">
+                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="https://www.linkedin.com/in/allysa-batchiller"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border/40 bg-card/40 text-foreground/80 transition-all hover:border-primary/60 hover:text-primary hover:bg-primary/15 backdrop-blur-sm"
+                  >
+                    <LinkedInIcon className="h-4 w-4" />
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="mailto:allysa-batchiller57@example.com"
+                    aria-label="Email"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border/40 bg-card/40 text-foreground/80 transition-all hover:border-primary/60 hover:text-primary hover:bg-primary/15 backdrop-blur-sm"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Link>
+                </motion.div>
+              </div>
             </motion.div>
           </motion.div>
         </motion.div>
