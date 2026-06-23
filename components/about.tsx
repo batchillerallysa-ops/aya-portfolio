@@ -1,5 +1,9 @@
+'use client'
+
 import Link from "next/link"
 import { ArrowRight, Mail } from "lucide-react"
+import { motion } from "framer-motion"
+import { staggerContainerVariants, staggerItemVariants, slideInFromLeftVariants, slideInFromRightVariants } from "@/lib/animations"
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -20,10 +24,16 @@ const STATS = [
 export function About() {
   return (
     <section id="about" className="scroll-mt-20 border-t border-border">
-      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <motion.div
+        className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+      >
+        <motion.div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16" variants={staggerContainerVariants}>
           {/* Left: terminal-window photo frame */}
-          <div className="relative mx-auto w-full max-w-md lg:mx-0">
+          <motion.div className="relative mx-auto w-full max-w-md lg:mx-0" variants={slideInFromLeftVariants}>
             {/* ambient glow behind the frame */}
             <div className="ambient-glow pointer-events-none absolute -inset-6 -z-10 rounded-[2rem] blur-2xl" aria-hidden="true" />
 
@@ -72,78 +82,88 @@ export function About() {
                 <span className="pointer-events-none absolute bottom-3 right-3 h-7 w-7 rounded-br-lg border-b-2 border-r-2 border-primary/70" aria-hidden="true" />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right: content */}
-          <div>
-            <p className="font-mono text-sm font-medium uppercase tracking-[0.25em] text-primary">{"// About Me"}</p>
-            <h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-              About My Information
-            </h2>
-            <p className="mt-5 text-pretty leading-relaxed text-muted-foreground">
-              I&apos;m a virtual assistant and automation specialist with a decade of hands-on experience across
-              operations, IT, and data. I help lean teams reclaim hours by streamlining repetitive workflows and wiring
-              up the right tools so the busywork runs itself.
-            </p>
-            <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
-              My background in process discipline — KYC reviews, quality audits, and large-scale data validation — is
-              what makes the automation I build actually stick.
-            </p>
+          <motion.div variants={slideInFromRightVariants}>
+            <motion.p className="font-mono text-sm font-medium uppercase tracking-[0.25em] text-primary" variants={staggerItemVariants}>{"// About AM Batchiller"}</motion.p>
+            <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl" variants={staggerItemVariants}>
+              Dedicated to Excellence
+            </motion.h2>
+            <motion.p className="mt-5 text-pretty leading-relaxed text-muted-foreground" variants={staggerItemVariants}>
+              I&apos;m AM Batchiller, a dedicated automation specialist passionate about transforming how teams work. With extensive experience in workflow optimization and system integration, I craft solutions that save time and streamline operations for businesses of all sizes.
+            </motion.p>
+            <motion.p className="mt-4 text-pretty leading-relaxed text-muted-foreground" variants={staggerItemVariants}>
+              My approach combines technical expertise with a deep understanding of business processes. I believe the best automations are invisible — they work seamlessly in the background while you focus on what matters most.
+            </motion.p>
 
             {/* role badges */}
-            <div className="mt-6 flex flex-wrap gap-2">
+            <motion.div className="mt-6 flex flex-wrap gap-2" variants={staggerContainerVariants}>
               {ROLES.map((role) => (
-                <span
+                <motion.span
                   key={role}
-                  className="rounded-full border border-primary/25 bg-primary/5 px-3.5 py-1.5 text-sm text-foreground/90 transition-colors hover:border-primary/50"
+                  className="rounded-full border border-primary/25 bg-primary/5 px-3.5 py-1.5 text-sm text-foreground/90 transition-colors hover:border-primary/50 cursor-pointer"
+                  variants={staggerItemVariants}
+                  whileHover={{ scale: 1.05 }}
                 >
                   {role}
-                </span>
+                </motion.span>
               ))}
-            </div>
+            </motion.div>
 
             {/* stat cards */}
-            <div className="mt-8 grid grid-cols-3 gap-3">
+            <motion.div className="mt-8 grid grid-cols-3 gap-3" variants={staggerContainerVariants}>
               {STATS.map((stat) => (
-                <div key={stat.label} className="glassmorphic-hover rounded-xl p-4 text-center">
+                <motion.div
+                  key={stat.label}
+                  className="glassmorphic-hover rounded-xl p-4 text-center cursor-pointer"
+                  variants={staggerItemVariants}
+                  whileHover={{ scale: 1.08 }}
+                >
                   <p className="font-heading text-2xl font-bold text-primary">{stat.value}</p>
                   <p className="mt-1 text-xs leading-snug text-muted-foreground">{stat.label}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* CTA + socials */}
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link
-                href="#contact"
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_0_24px_-4px] shadow-primary/60 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_32px_0] hover:shadow-primary/70"
-              >
-                Get in touch
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
+            <motion.div className="mt-8 flex flex-wrap items-center gap-4" variants={staggerItemVariants}>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  href="#contact"
+                  className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-primary to-secondary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_0_24px_-4px] shadow-primary/60 transition-all duration-300 hover:shadow-[0_0_32px_0] hover:shadow-primary/70"
+                >
+                  Get in touch
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+              </motion.div>
 
               <div className="flex items-center gap-2">
-                <Link
-                  href="https://www.linkedin.com/in/allysa-batchiller"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
-                >
-                  <LinkedInIcon className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="mailto:allysa-batchiller57@example.com"
-                  aria-label="Email"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
-                >
-                  <Mail className="h-4 w-4" />
-                </Link>
+                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="https://www.linkedin.com/in/allysa-batchiller"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+                  >
+                    <LinkedInIcon className="h-4 w-4" />
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    href="mailto:allysa-batchiller57@example.com"
+                    aria-label="Email"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Link>
+                </motion.div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   )
 }

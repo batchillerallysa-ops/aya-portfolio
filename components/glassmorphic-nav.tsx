@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Menu, X, Moon, Sparkles, Sunset, Waves } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const NAV_ITEMS = [
   { label: 'About', href: '#about' },
@@ -25,10 +26,25 @@ export function GlassmorphicNav() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const [accent, setAccent] = useState<AccentId>('amber')
+  const [activeSection, setActiveSection] = useState('top')
+  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({})
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
+
+      // Determine active section based on scroll position
+      const sections = ['top', 'about', 'services', 'tools', 'work', 'contact']
+      for (const section of sections) {
+        const element = document.getElementById(section)
+        if (element) {
+          const rect = element.getBoundingClientRect()
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section)
+            break
+          }
+        }
+      }
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -70,16 +86,30 @@ export function GlassmorphicNav() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors duration-300 relative group"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300" />
-              </Link>
-            ))}
+            {NAV_ITEMS.map((item) => {
+              const isActive = activeSection === item.href.slice(1)
+              return (
+                <motion.div key={item.href} whileHover={{ scale: 1.05 }}>
+                  <Link
+                    href={item.href}
+                    className={`text-sm font-medium transition-colors duration-300 relative group ${
+                      isActive
+                        ? 'text-primary'
+                        : 'text-foreground/80 hover:text-primary'
+                    }`}
+                  >
+                    {item.label}
+                    <motion.span
+                      className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-primary to-accent"
+                      initial={{ width: 0 }}
+                      animate={{ width: isActive ? '100%' : '0%' }}
+                      transition={{ duration: 0.3 }}
+                    />
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300" />
+                  </Link>
+                </motion.div>
+              )
+            })}
           </div>
 
           <div className="flex items-center gap-3">

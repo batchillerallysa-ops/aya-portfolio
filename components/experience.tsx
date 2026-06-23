@@ -1,3 +1,8 @@
+'use client'
+
+import { motion } from "framer-motion"
+import { staggerContainerVariants, staggerItemVariants } from "@/lib/animations"
+
 const EXPERIENCE = [
   {
     role: "Operations Executive",
@@ -66,21 +71,27 @@ const EXPERIENCE = [
 export function Experience() {
   return (
     <section id="experience" className="scroll-mt-20 border-t border-border bg-card/30">
-      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-        <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">Experience</p>
-          <h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+      <motion.div
+        className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+      >
+        <motion.div className="max-w-2xl" variants={staggerContainerVariants}>
+          <motion.p className="text-sm font-medium uppercase tracking-widest text-primary" variants={staggerItemVariants}>Experience</motion.p>
+          <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl" variants={staggerItemVariants}>
             A decade of operations &amp; analysis
-          </h2>
-          <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
+          </motion.h2>
+          <motion.p className="mt-4 text-pretty leading-relaxed text-muted-foreground" variants={staggerItemVariants}>
             Ten-plus years across operations, IT, and data — building the process discipline that makes automation
             actually stick.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <ol className="mt-12 space-y-8 border-l border-border pl-6 sm:pl-8">
+        <motion.ol className="mt-12 space-y-8 border-l border-border pl-6 sm:pl-8" variants={staggerContainerVariants}>
           {EXPERIENCE.map((job, i) => (
-            <li key={`${job.company}-${i}`} className="relative">
+            <motion.li key={`${job.company}-${i}`} className="relative" variants={staggerItemVariants}>
               <span
                 className="absolute -left-[31px] top-1.5 h-3 w-3 rounded-full border-2 border-background bg-primary sm:-left-[39px]"
                 aria-hidden="true"
@@ -100,10 +111,10 @@ export function Experience() {
                   ))}
                 </ul>
               </div>
-            </li>
+            </motion.li>
           ))}
-        </ol>
-      </div>
+        </motion.ol>
+      </motion.div>
     </section>
   )
 }

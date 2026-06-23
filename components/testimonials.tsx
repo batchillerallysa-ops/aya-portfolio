@@ -1,4 +1,8 @@
+'use client'
+
 import { Quote } from "lucide-react"
+import { motion } from "framer-motion"
+import { staggerContainerVariants, staggerItemVariants } from "@/lib/animations"
 
 const TESTIMONIALS = [
   {
@@ -27,19 +31,27 @@ const TESTIMONIALS = [
 export function Testimonials() {
   return (
     <section id="testimonials" className="scroll-mt-20 border-t border-border bg-card/30">
-      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-        <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">Testimonials</p>
-          <h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+      <motion.div
+        className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+      >
+        <motion.div className="max-w-2xl" variants={staggerContainerVariants}>
+          <motion.p className="text-sm font-medium uppercase tracking-widest text-primary" variants={staggerItemVariants}>Testimonials</motion.p>
+          <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl" variants={staggerItemVariants}>
             What colleagues say
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
 
-        <div className="mt-12 grid gap-4 lg:grid-cols-3">
+        <motion.div className="mt-12 grid gap-4 lg:grid-cols-3" variants={staggerContainerVariants}>
           {TESTIMONIALS.map((t) => (
-            <figure
+            <motion.figure
               key={t.name}
-              className="flex flex-col rounded-2xl border border-border bg-card p-6"
+              className="flex flex-col rounded-2xl border border-border bg-card p-6 cursor-pointer"
+              variants={staggerItemVariants}
+              whileHover={{ scale: 1.05, y: -4 }}
             >
               <Quote className="h-7 w-7 flex-none text-primary/60" aria-hidden="true" />
               <blockquote className="mt-4 flex-1 text-pretty text-sm leading-relaxed text-foreground/90">
@@ -50,10 +62,10 @@ export function Testimonials() {
                 <p className="text-xs text-muted-foreground">{t.title}</p>
                 <p className="text-xs text-primary">{t.company}</p>
               </figcaption>
-            </figure>
+            </motion.figure>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   )
 }

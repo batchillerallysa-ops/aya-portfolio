@@ -1,4 +1,8 @@
+'use client'
+
 import { Workflow, Database, CalendarClock, BarChart3, Bot, LifeBuoy } from "lucide-react"
+import { motion } from "framer-motion"
+import { staggerContainerVariants, staggerItemVariants } from "@/lib/animations"
 
 const SERVICES = [
   {
@@ -42,33 +46,41 @@ const SERVICES = [
 export function Services() {
   return (
     <section id="services" className="scroll-mt-20 border-t border-border">
-      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-        <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-widest text-primary">Services</p>
-          <h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+      <motion.div
+        className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainerVariants}
+      >
+        <motion.div className="max-w-2xl" variants={staggerContainerVariants}>
+          <motion.p className="text-sm font-medium uppercase tracking-widest text-primary" variants={staggerItemVariants}>Services</motion.p>
+          <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl" variants={staggerItemVariants}>
             How I can support your business
-          </h2>
-          <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
+          </motion.h2>
+          <motion.p className="mt-4 text-pretty leading-relaxed text-muted-foreground" variants={staggerItemVariants}>
             A blend of automation engineering and reliable virtual assistance — focused on efficiency, accuracy, and
             giving you back your time.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" variants={staggerContainerVariants}>
           {SERVICES.map((service) => (
-            <div
+            <motion.div
               key={service.title}
-              className="group rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/50"
+              className="group rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/50 cursor-pointer"
+              variants={staggerItemVariants}
+              whileHover={{ scale: 1.05, borderColor: "var(--primary)" }}
             >
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <motion.span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary" whileHover={{ scale: 1.2, rotate: 10 }}>
                 <service.icon className="h-5 w-5" />
-              </span>
+              </motion.span>
               <h3 className="mt-5 font-heading text-lg font-semibold">{service.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   )
 }

@@ -52,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${geistMono.variable} bg-background`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${geistMono.variable} bg-background scroll-smooth`}
     >
       <body className="font-sans antialiased overflow-x-hidden">
         <FireflyBackground />
