@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk, Geist_Mono } from 'next/font/google'
-import { FireflyBackground } from '@/components/firefly-background'
+import { AnimatedBackground } from '@/components/animated-background'
 import { FireflyCursor } from '@/components/firefly-cursor'
 import './globals.css'
 
@@ -55,7 +55,7 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} ${geistMono.variable} bg-background scroll-smooth`}
     >
       <body className="font-sans antialiased overflow-x-hidden">
-        <FireflyBackground />
+        <AnimatedBackground sectionColor="teal" intensity={1} />
         <FireflyCursor />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
