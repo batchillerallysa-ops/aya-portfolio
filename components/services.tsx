@@ -55,10 +55,10 @@ export function Services() {
       >
         <motion.div className="max-w-2xl" variants={staggerContainerVariants}>
           <motion.p className="text-sm font-medium uppercase tracking-widest text-primary" variants={staggerItemVariants}>Services</motion.p>
-          <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl" variants={staggerItemVariants}>
+          <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight text-white/95 sm:text-4xl" variants={staggerItemVariants}>
             How I can support your business
           </motion.h2>
-          <motion.p className="mt-4 text-pretty leading-relaxed text-muted-foreground" variants={staggerItemVariants}>
+          <motion.p className="mt-4 text-pretty leading-relaxed text-white/80" variants={staggerItemVariants}>
             A blend of automation engineering and reliable virtual assistance — focused on efficiency, accuracy, and
             giving you back your time.
           </motion.p>
@@ -68,15 +68,15 @@ export function Services() {
           {SERVICES.map((service) => (
             <motion.div
               key={service.title}
-              className="group rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/50 cursor-pointer"
+              className="group rounded-2xl border border-white/10 bg-slate-950/70 backdrop-blur-md p-6 transition-colors hover:border-primary/50 cursor-pointer"
               variants={staggerItemVariants}
               whileHover={{ scale: 1.05, borderColor: "var(--primary)" }}
             >
               <motion.span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary" whileHover={{ scale: 1.2, rotate: 10 }}>
                 <service.icon className="h-5 w-5" />
               </motion.span>
-              <h3 className="mt-5 font-heading text-lg font-semibold">{service.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
+              <h3 className="mt-5 font-heading text-lg font-semibold text-white/95">{service.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/80">{service.description}</p>
             </motion.div>
           ))}
         </motion.div>

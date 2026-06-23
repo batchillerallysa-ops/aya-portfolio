@@ -21,10 +21,10 @@ export function Work() {
         <motion.div className="flex flex-wrap items-end justify-between gap-4" variants={staggerContainerVariants}>
           <motion.div className="max-w-2xl" variants={staggerContainerVariants}>
             <motion.p className="text-sm font-medium uppercase tracking-widest text-primary" variants={staggerItemVariants}>Previous Work</motion.p>
-            <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl" variants={staggerItemVariants}>
+            <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight text-white/95 sm:text-4xl" variants={staggerItemVariants}>
               Automations I&apos;ve built
             </motion.h2>
-            <motion.p className="mt-4 text-pretty leading-relaxed text-muted-foreground" variants={staggerItemVariants}>
+            <motion.p className="mt-4 text-pretty leading-relaxed text-white/80" variants={staggerItemVariants}>
               Real-world workflows across Zapier, Make.com, n8n, and GoHighLevel. Click any project to read the full
               case study.
             </motion.p>
@@ -63,14 +63,14 @@ export function Work() {
                   <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
                 </div>
 
-                <h3 className="mt-5 font-heading text-lg font-semibold leading-snug text-balance">
+                <h3 className="mt-5 font-heading text-lg font-semibold leading-snug text-balance text-white/95">
                   {project.title}
                 </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{project.tagline}</p>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-white/80">{project.tagline}</p>
 
                 <div className="mt-5 flex flex-wrap gap-1.5 border-t border-border pt-4">
                   {project.techStack.slice(0, 3).map((tech) => (
-                    <span key={tech} className="rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground">
+                    <span key={tech} className="rounded-md bg-white/10 px-2 py-1 text-xs text-white/80">
                       {tech}
                     </span>
                   ))}

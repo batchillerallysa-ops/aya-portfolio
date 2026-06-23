@@ -80,10 +80,10 @@ export function Experience() {
       >
         <motion.div className="max-w-2xl" variants={staggerContainerVariants}>
           <motion.p className="text-sm font-medium uppercase tracking-widest text-primary" variants={staggerItemVariants}>Experience</motion.p>
-          <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl" variants={staggerItemVariants}>
+          <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight text-white/95 sm:text-4xl" variants={staggerItemVariants}>
             A decade of operations &amp; analysis
           </motion.h2>
-          <motion.p className="mt-4 text-pretty leading-relaxed text-muted-foreground" variants={staggerItemVariants}>
+          <motion.p className="mt-4 text-pretty leading-relaxed text-white/80" variants={staggerItemVariants}>
             Ten-plus years across operations, IT, and data — building the process discipline that makes automation
             actually stick.
           </motion.p>

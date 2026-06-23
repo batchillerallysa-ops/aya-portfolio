@@ -40,7 +40,7 @@ export function Testimonials() {
       >
         <motion.div className="max-w-2xl" variants={staggerContainerVariants}>
           <motion.p className="text-sm font-medium uppercase tracking-widest text-primary" variants={staggerItemVariants}>Testimonials</motion.p>
-          <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight sm:text-4xl" variants={staggerItemVariants}>
+          <motion.h2 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight text-white/95 sm:text-4xl" variants={staggerItemVariants}>
             What colleagues say
           </motion.h2>
         </motion.div>
@@ -49,18 +49,18 @@ export function Testimonials() {
           {TESTIMONIALS.map((t) => (
             <motion.figure
               key={t.name}
-              className="flex flex-col rounded-2xl border border-border bg-card p-6 cursor-pointer"
+              className="flex flex-col rounded-2xl border border-white/10 bg-slate-950/70 backdrop-blur-md p-6 cursor-pointer"
               variants={staggerItemVariants}
               whileHover={{ scale: 1.05, y: -4 }}
             >
               <Quote className="h-7 w-7 flex-none text-primary/60" aria-hidden="true" />
-              <blockquote className="mt-4 flex-1 text-pretty text-sm leading-relaxed text-foreground/90">
+              <blockquote className="mt-4 flex-1 text-pretty text-sm leading-relaxed text-white/95">
                 {t.quote}
               </blockquote>
               <figcaption className="mt-6 border-t border-border pt-4">
-                <p className="font-heading text-sm font-semibold">{t.name}</p>
-                <p className="text-xs text-muted-foreground">{t.title}</p>
-                <p className="text-xs text-primary">{t.company}</p>
+                <p className="font-heading text-sm font-semibold text-white/95">{t.name}</p>
+                <p className="text-xs text-white/70">{t.title}</p>
+                <p className="text-xs text-cyan-300">{t.company}</p>
               </figcaption>
             </motion.figure>
           ))}
