@@ -50,16 +50,16 @@ export function FireflyBackground() {
     // Animation loop
     const animate = () => {
       // Clear canvas with slight fade
-      ctx.fillStyle = 'rgba(8, 8, 12, 0.12)'
+      ctx.fillStyle = 'rgba(10, 26, 21, 0.1)'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       // Draw bokeh circles
       const bokehShapes = [
-        { x: canvas.width * 0.2, y: canvas.height * 0.3, r: 200, color: 'rgba(168, 85, 247, 0.08)' },
-        { x: canvas.width * 0.8, y: canvas.height * 0.7, r: 250, color: 'rgba(124, 58, 237, 0.06)' },
-        { x: canvas.width * 0.5, y: canvas.height * 0.1, r: 180, color: 'rgba(192, 132, 252, 0.06)' },
-        { x: canvas.width * 0.1, y: canvas.height * 0.9, r: 220, color: 'rgba(168, 85, 247, 0.05)' },
-        { x: canvas.width * 0.9, y: canvas.height * 0.2, r: 200, color: 'rgba(124, 58, 237, 0.06)' },
+        { x: canvas.width * 0.2, y: canvas.height * 0.3, r: 200, color: 'rgba(0, 229, 208, 0.08)' },
+        { x: canvas.width * 0.8, y: canvas.height * 0.7, r: 250, color: 'rgba(6, 214, 160, 0.06)' },
+        { x: canvas.width * 0.5, y: canvas.height * 0.1, r: 180, color: 'rgba(20, 184, 166, 0.07)' },
+        { x: canvas.width * 0.1, y: canvas.height * 0.9, r: 220, color: 'rgba(0, 229, 208, 0.05)' },
+        { x: canvas.width * 0.9, y: canvas.height * 0.2, r: 200, color: 'rgba(6, 214, 160, 0.06)' },
       ]
 
       bokehShapes.forEach((bokeh) => {
@@ -104,20 +104,20 @@ export function FireflyBackground() {
 
         // Draw firefly glow
         const gradientGlow = ctx.createRadialGradient(fly.x, fly.y, 0, fly.x, fly.y, fly.size * 8)
-        gradientGlow.addColorStop(0, `rgba(168, 85, 247, ${brightness * 0.6})`)
-        gradientGlow.addColorStop(0.5, `rgba(168, 85, 247, ${brightness * 0.2})`)
-        gradientGlow.addColorStop(1, 'rgba(168, 85, 247, 0)')
+        gradientGlow.addColorStop(0, `rgba(255, 215, 0, ${brightness * 0.6})`)
+        gradientGlow.addColorStop(0.5, `rgba(255, 215, 0, ${brightness * 0.2})`)
+        gradientGlow.addColorStop(1, 'rgba(255, 215, 0, 0)')
         ctx.fillStyle = gradientGlow
         ctx.fillRect(fly.x - fly.size * 8, fly.y - fly.size * 8, fly.size * 16, fly.size * 16)
 
         // Draw firefly core
-        ctx.fillStyle = `rgba(192, 132, 252, ${brightness})`
+        ctx.fillStyle = `rgba(255, 215, 0, ${brightness})`
         ctx.beginPath()
         ctx.arc(fly.x, fly.y, fly.size, 0, Math.PI * 2)
         ctx.fill()
 
         // Add inner bright core
-        ctx.fillStyle = `rgba(216, 180, 254, ${brightness * 0.8})`
+        ctx.fillStyle = `rgba(255, 235, 59, ${brightness * 0.8})`
         ctx.beginPath()
         ctx.arc(fly.x, fly.y, fly.size * 0.6, 0, Math.PI * 2)
         ctx.fill()
@@ -140,7 +140,7 @@ export function FireflyBackground() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 -z-50 pointer-events-none"
-      style={{ background: 'linear-gradient(135deg, #08080c 0%, #0d0b14 50%, #0a0a10 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #0a1a15 0%, #0f2921 50%, #132a23 100%)' }}
     />
   )
 }
