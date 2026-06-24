@@ -4,8 +4,8 @@ const CONTACTS = [
   {
     icon: Mail,
     label: "Email",
-    value: "batchiller.allysa@gmail.com",
-    href: "mailto:batchiller.allysa@gmail.com",
+    value: "allysa.batachiller57@gmail.com",
+    href: "mailto:allysa.batachiller57@gmail.com",
   },
   {
     icon: Phone,
