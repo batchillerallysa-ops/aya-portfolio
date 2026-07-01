@@ -32,7 +32,11 @@ export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug)
 }
 
-export const projects: Project[] = [
+// ============================================================================
+// GHL (GoHighLevel) Projects
+// ============================================================================
+
+const ghlProjects: Project[] = [
   {
     slug: "lead-capture-instant-followups",
     title: "Lead Capture with Instant Follow-ups",
@@ -83,31 +87,13 @@ export const projects: Project[] = [
     techStack: ["GoHighLevel", "Conditional Logic", "Multi-channel Routing"],
     imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Lead%20Capture%20with%20Instant%20Follow%20ups%20PART%202-rnhPI8nlsIgnoGfIh0TdCb82UxcmH7.png",
   },
-  {
-    slug: "ai-jobs-scraper-resume",
-    title: "AI Jobs Scraper + Resume Optimizer",
-    tool: "n8n",
-    tagline: "Scrape live job listings, optimize your resume for each role, and apply in minutes.",
-    overview:
-      "An n8n workflow that runs on a schedule, scrapes job boards for matching roles, pulls your resume, uses Claude AI to tailor it for each position, and posts optimized resumes and application drafts to a dedicated Slack channel for quick review and manual submission.",
-    problem: [
-      "Manual job searching, resume customization, and application takes 2-3 hours per application.",
-      "Generic resumes get lower response rates from ATS and hiring managers.",
-      "Hard to track which resumes were submitted where and stay on top of new opportunities.",
-    ],
-    solution: [
-      "Set up n8n scheduled trigger (daily) that searches job APIs for new postings matching your skills.",
-      "Created branching logic: validate query → search jobs → pull resume file → send to Claude with role-specific prompt.",
-      "AI generates tailored resume and cover letter draft; formatted output is posted to Slack for 1-click review and manual submit.",
-    ],
-    results: [
-      { stat: "2.5 hrs", label: "saved per application" },
-      { stat: "28%", label: "increase in ATS pass rate" },
-      { stat: "15+", label: "applications per week (vs. 2-3 manual)" },
-    ],
-    techStack: ["n8n", "Claude AI", "Job APIs", "Slack", "OpenRouter"],
-    imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/AI%20Jobs%20Scraper%20%2B%20Resume%20Optimizer-LNFoThUjjZmQFq1eeXVollIX5tKO7H.png",
-  },
+]
+
+// ============================================================================
+// Make.com Projects
+// ============================================================================
+
+const makeProjects: Project[] = [
   {
     slug: "rag-agents",
     title: "RAG Agents with Vector Knowledge Base",
@@ -158,6 +144,38 @@ export const projects: Project[] = [
     techStack: ["Make.com", "Xero API", "Asana API", "Google Sheets"],
     imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Automated%20Export%20of%20Xero%20Account%20Transactions%20%26%20Asana%20Upload-qOit7t9C8UwFmvfKONXjvM6hxymSAb.png",
   },
+]
+
+// ============================================================================
+// n8n Projects
+// ============================================================================
+
+const n8nProjects: Project[] = [
+  {
+    slug: "ai-jobs-scraper-resume",
+    title: "AI Jobs Scraper + Resume Optimizer",
+    tool: "n8n",
+    tagline: "Scrape live job listings, optimize your resume for each role, and apply in minutes.",
+    overview:
+      "An n8n workflow that runs on a schedule, scrapes job boards for matching roles, pulls your resume, uses Claude AI to tailor it for each position, and posts optimized resumes and application drafts to a dedicated Slack channel for quick review and manual submission.",
+    problem: [
+      "Manual job searching, resume customization, and application takes 2-3 hours per application.",
+      "Generic resumes get lower response rates from ATS and hiring managers.",
+      "Hard to track which resumes were submitted where and stay on top of new opportunities.",
+    ],
+    solution: [
+      "Set up n8n scheduled trigger (daily) that searches job APIs for new postings matching your skills.",
+      "Created branching logic: validate query → search jobs → pull resume file → send to Claude with role-specific prompt.",
+      "AI generates tailored resume and cover letter draft; formatted output is posted to Slack for 1-click review and manual submit.",
+    ],
+    results: [
+      { stat: "2.5 hrs", label: "saved per application" },
+      { stat: "28%", label: "increase in ATS pass rate" },
+      { stat: "15+", label: "applications per week (vs. 2-3 manual)" },
+    ],
+    techStack: ["n8n", "Claude AI", "Job APIs", "Slack", "OpenRouter"],
+    imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/AI%20Jobs%20Scraper%20%2B%20Resume%20Optimizer-LNFoThUjjZmQFq1eeXVollIX5tKO7H.png",
+  },
   {
     slug: "facebook-ai-agent",
     title: "Facebook AI Agent for Customer Support",
@@ -182,31 +200,6 @@ export const projects: Project[] = [
     ],
     techStack: ["n8n", "Facebook Graph API", "Google Gemini", "Simple Memory Layer"],
     imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Facebook%20AI%20Agent-NbkawLaer4N89lDppLxIz4G43d63Cp.png",
-  },
-  {
-    slug: "ai-content-repurposing",
-    title: "AI Content Repurposing Multi-Platform",
-    tool: "zapier",
-    tagline: "Turn one long-form post into a week of multi-channel content, automatically.",
-    overview:
-      "A Zapier workflow that watches for newly published content in Google Drive, uses AI to generate platform-specific versions (transcription, blog post, social snippets), then posts directly to Facebook and LinkedIn or queues in a line item for manual review.",
-    problem: [
-      "Every blog post or video required hours of manual reformatting for each social channel.",
-      "Content was published inconsistently because repurposing always slipped to the bottom of the to-do list.",
-      "Tone and key messaging drifted between platforms when different people rewrote the same piece.",
-    ],
-    solution: [
-      "Set up Zapier trigger on Google Drive file creation or Google Sheets row addition.",
-      "Passed the source copy into OpenAI with channel-specific prompts (LinkedIn tone vs. Twitter brevity vs. email nurture).",
-      "Used Formatter and Filter steps to clean output, enforce character limits, and route each variant directly to social or to a Sheets queue for review.",
-    ],
-    results: [
-      { stat: "8 hrs", label: "saved per week on repurposing" },
-      { stat: "4x", label: "increase in posting cadence" },
-      { stat: "87%", label: "on-brand consistency score" },
-    ],
-    techStack: ["Zapier", "OpenAI", "Google Drive/Sheets", "Facebook API", "LinkedIn API"],
-    imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/AI%20Content%20Repurposing-4JduOcoMehxmoJWSdAy1oL7pd5Fsvf.png",
   },
   {
     slug: "ai-weather-forecast",
@@ -257,6 +250,38 @@ export const projects: Project[] = [
     ],
     techStack: ["n8n", "Claude AI", "RunwayML / Synthesia", "YouTube Data API", "Facebook Graph API"],
     imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Automated%20YouTube%20Shorts%20and%20Facebook%20Reels%20Creator.webp-lOH8idpT3F8eR6KaFsAFRsaYE7AuD7.png",
+  },
+]
+
+// ============================================================================
+// Zapier Projects
+// ============================================================================
+
+const zapierProjects: Project[] = [
+  {
+    slug: "ai-content-repurposing",
+    title: "AI Content Repurposing Multi-Platform",
+    tool: "zapier",
+    tagline: "Turn one long-form post into a week of multi-channel content, automatically.",
+    overview:
+      "A Zapier workflow that watches for newly published content in Google Drive, uses AI to generate platform-specific versions (transcription, blog post, social snippets), then posts directly to Facebook and LinkedIn or queues in a line item for manual review.",
+    problem: [
+      "Every blog post or video required hours of manual reformatting for each social channel.",
+      "Content was published inconsistently because repurposing always slipped to the bottom of the to-do list.",
+      "Tone and key messaging drifted between platforms when different people rewrote the same piece.",
+    ],
+    solution: [
+      "Set up Zapier trigger on Google Drive file creation or Google Sheets row addition.",
+      "Passed the source copy into OpenAI with channel-specific prompts (LinkedIn tone vs. Twitter brevity vs. email nurture).",
+      "Used Formatter and Filter steps to clean output, enforce character limits, and route each variant directly to social or to a Sheets queue for review.",
+    ],
+    results: [
+      { stat: "8 hrs", label: "saved per week on repurposing" },
+      { stat: "4x", label: "increase in posting cadence" },
+      { stat: "87%", label: "on-brand consistency score" },
+    ],
+    techStack: ["Zapier", "OpenAI", "Google Drive/Sheets", "Facebook API", "LinkedIn API"],
+    imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/AI%20Content%20Repurposing-4JduOcoMehxmoJWSdAy1oL7pd5Fsvf.png",
   },
   {
     slug: "auto-sort-gmail-attachments",
@@ -333,4 +358,15 @@ export const projects: Project[] = [
     techStack: ["Zapier", "Asana API", "Gmail", "Google Drive", "AI/Formatter Steps"],
     imageUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Asana%20CRM%20Lead%20Engagement%20Workflow-Qyls1nVFrVraSQXovYoHkONSXvwA3M.png",
   },
+]
+
+// ============================================================================
+// Combine all projects by platform order
+// ============================================================================
+
+export const projects: Project[] = [
+  ...ghlProjects,
+  ...makeProjects,
+  ...n8nProjects,
+  ...zapierProjects,
 ]
