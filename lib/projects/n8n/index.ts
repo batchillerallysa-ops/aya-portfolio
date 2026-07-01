@@ -79,6 +79,8 @@ export const n8nProjects: Project[] = [
       { stat: "5 mins", label: "Time saved per person daily" },
     ],
     techStack: ["n8n", "OpenWeatherMap API", "HTML Templates", "Email", "Scheduling"],
+    imageUrl:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Weather%20Forecast%20Email%20Digest-1eM3OzwQcVNDDqm1oeVFLCEDnqWqfv.png",
   },
   {
     slug: "youtube-reels-automation",
