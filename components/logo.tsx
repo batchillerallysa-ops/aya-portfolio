@@ -6,17 +6,12 @@ export function Logo({ className }: { className?: string }) {
     <Link
       href="/#top"
       className={cn(
-        "group inline-flex items-center gap-2.5 font-heading text-lg font-bold tracking-tight",
+        "inline-flex items-center font-heading text-lg font-bold tracking-tight transition-colors hover:text-primary",
         className,
       )}
       aria-label="Allysa Batchiller — home"
     >
-      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
-        AB
-      </span>
-      <span className="leading-none">
-        Allysa<span className="text-primary"> Batchiller</span>
-      </span>
+      Allysa<span className="text-primary"> Batchiller</span>
     </Link>
   )
 }
