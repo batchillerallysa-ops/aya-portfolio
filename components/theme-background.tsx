@@ -10,6 +10,16 @@ interface Particle {
   brightness: number
   size: number
   cycle: number
+  depth?: number
+}
+
+interface BokehCircle {
+  x: number
+  y: number
+  r: number
+  color: string
+  blurRadius: number
+  depth: number
 }
 
 type ThemeId = 'wave' | 'sparkle' | 'sun' | 'moon'
@@ -52,17 +62,25 @@ export function ThemeBackground() {
     // Initialize particles based on theme
     const initializeParticles = () => {
       const particles: Particle[] = []
-      const particleCount = theme === 'sun' ? 80 : 120
-
+      let particleCount = 120
+      
+      if (theme === 'sun') particleCount = 80
+      if (theme === 'wave') particleCount = 300 // Hundreds of firefly particles for wave
+      
       for (let i = 0; i < particleCount; i++) {
+        let velocity = 0.8
+        if (theme === 'sun') velocity = 0.3
+        if (theme === 'wave') velocity = 0.4 // Slower drift for fireflies
+        
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * (theme === 'sun' ? 0.3 : 0.8),
-          vy: (Math.random() - 0.5) * (theme === 'sun' ? 0.3 : 0.8),
+          vx: (Math.random() - 0.5) * velocity,
+          vy: (Math.random() - 0.5) * velocity,
           brightness: Math.random(),
-          size: Math.random() * 2 + 1,
+          size: theme === 'wave' ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 1,
           cycle: Math.random() * Math.PI * 2,
+          depth: theme === 'wave' ? Math.random() : undefined,
         })
       }
       particlesRef.current = particles
@@ -91,12 +109,20 @@ export function ThemeBackground() {
 
       // Draw bokeh/gradient circles based on theme
       if (theme === 'wave') {
-        const bokehShapes = [
-          { x: canvas.width * 0.2, y: canvas.height * 0.3, r: 200, color: 'rgba(6, 182, 212, 0.08)' },
-          { x: canvas.width * 0.8, y: canvas.height * 0.7, r: 250, color: 'rgba(34, 211, 238, 0.06)' },
-          { x: canvas.width * 0.5, y: canvas.height * 0.1, r: 180, color: 'rgba(103, 232, 249, 0.06)' },
-          { x: canvas.width * 0.1, y: canvas.height * 0.9, r: 220, color: 'rgba(6, 182, 212, 0.05)' },
-          { x: canvas.width * 0.9, y: canvas.height * 0.2, r: 200, color: 'rgba(34, 211, 238, 0.06)' },
+        // Large blurred cyan/turquoise bokeh circles at different depths for cinematic effect
+        const bokehShapes: BokehCircle[] = [
+          // Background layer (deeper, more blurred)
+          { x: canvas.width * 0.15, y: canvas.height * 0.25, r: 300, color: 'rgba(16, 185, 129, 0.04)', blurRadius: 40, depth: 0.3 },
+          { x: canvas.width * 0.85, y: canvas.height * 0.75, r: 350, color: 'rgba(6, 182, 212, 0.05)', blurRadius: 45, depth: 0.2 },
+          
+          // Mid layer
+          { x: canvas.width * 0.5, y: canvas.height * 0.2, r: 280, color: 'rgba(34, 211, 238, 0.06)', blurRadius: 35, depth: 0.5 },
+          { x: canvas.width * 0.1, y: canvas.height * 0.8, r: 320, color: 'rgba(6, 182, 212, 0.04)', blurRadius: 42, depth: 0.4 },
+          { x: canvas.width * 0.9, y: canvas.height * 0.3, r: 300, color: 'rgba(34, 211, 238, 0.05)', blurRadius: 38, depth: 0.35 },
+          
+          // Foreground layer (sharper, more visible)
+          { x: canvas.width * 0.35, y: canvas.height * 0.6, r: 250, color: 'rgba(103, 232, 249, 0.07)', blurRadius: 32, depth: 0.7 },
+          { x: canvas.width * 0.7, y: canvas.height * 0.45, r: 270, color: 'rgba(22, 163, 74, 0.05)', blurRadius: 36, depth: 0.6 },
         ]
 
         bokehShapes.forEach((bokeh) => {
@@ -104,7 +130,9 @@ export function ThemeBackground() {
           gradient.addColorStop(0, bokeh.color)
           gradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
           ctx.fillStyle = gradient
+          ctx.filter = `blur(${bokeh.blurRadius}px)`
           ctx.fillRect(bokeh.x - bokeh.r, bokeh.y - bokeh.r, bokeh.r * 2, bokeh.r * 2)
+          ctx.filter = 'none'
         })
       } else if (theme === 'moon') {
         const bokehShapes = [
@@ -188,17 +216,35 @@ export function ThemeBackground() {
 
         // Draw particles based on theme
         if (theme === 'wave') {
-          // Cyan bokeh bubbles
-          const gradientGlow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size * 8)
-          gradientGlow.addColorStop(0, `rgba(6, 182, 212, ${brightness * 0.6})`)
-          gradientGlow.addColorStop(0.5, `rgba(34, 211, 238, ${brightness * 0.2})`)
-          gradientGlow.addColorStop(1, 'rgba(103, 232, 249, 0)')
-          ctx.fillStyle = gradientGlow
-          ctx.fillRect(particle.x - particle.size * 8, particle.y - particle.size * 8, particle.size * 16, particle.size * 16)
-
-          ctx.fillStyle = `rgba(103, 232, 249, ${brightness})`
+          // Tiny glowing firefly particles with soft yellow-green light
+          // Outer glow: soft yellow-green halo
+          const glowRadius = particle.size * 12
+          const glowGradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, glowRadius)
+          glowGradient.addColorStop(0, `rgba(132, 204, 22, ${brightness * 0.25})`)
+          glowGradient.addColorStop(0.4, `rgba(163, 230, 53, ${brightness * 0.1})`)
+          glowGradient.addColorStop(1, 'rgba(187, 247, 208, 0)')
+          ctx.fillStyle = glowGradient
+          ctx.fillRect(particle.x - glowRadius, particle.y - glowRadius, glowRadius * 2, glowRadius * 2)
+          
+          // Mid glow: warmer yellow tone
+          const midGlowRadius = particle.size * 6
+          const midGlow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, midGlowRadius)
+          midGlow.addColorStop(0, `rgba(202, 210, 23, ${brightness * 0.4})`)
+          midGlow.addColorStop(0.6, `rgba(251, 191, 36, ${brightness * 0.15})`)
+          midGlow.addColorStop(1, 'rgba(253, 224, 71, 0)')
+          ctx.fillStyle = midGlow
+          ctx.fillRect(particle.x - midGlowRadius, particle.y - midGlowRadius, midGlowRadius * 2, midGlowRadius * 2)
+          
+          // Core: bright yellow-green firefly center
+          ctx.fillStyle = `rgba(240, 253, 250, ${brightness * 0.95})`
           ctx.beginPath()
-          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
+          ctx.arc(particle.x, particle.y, particle.size * 0.8, 0, Math.PI * 2)
+          ctx.fill()
+          
+          // Inner bright core for intensity
+          ctx.fillStyle = `rgba(134, 239, 172, ${brightness})`
+          ctx.beginPath()
+          ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2)
           ctx.fill()
         } else if (theme === 'moon') {
           // Purple stars

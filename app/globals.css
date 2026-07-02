@@ -51,7 +51,8 @@
 /* Wave/Teal theme (default) */
 :root {
   color-scheme: dark;
-  --background: #08080c;
+  --background: linear-gradient(135deg, #0a4d3d 0%, #0d5f52 25%, #0a6b61 50%, #086e6e 75%, #0a5d68 100%);
+  --background-fallback: #0a4d3d;
   --foreground: #ededf2;
   --card: #121218;
   --card-foreground: #ededf2;
@@ -287,7 +288,10 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: var(--background);
+    background-attachment: fixed;
+    transition: background 600ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   html {
     @apply font-sans;
