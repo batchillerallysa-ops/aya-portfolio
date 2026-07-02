@@ -64,13 +64,17 @@ export function ThemeBackground() {
       const particles: Particle[] = []
       let particleCount = 120
       
-      if (theme === 'sun') particleCount = 80
-      if (theme === 'wave') particleCount = 300 // Hundreds of firefly particles for wave
+      if (theme === 'moon') particleCount = 250 // Hundreds of star particles
+      if (theme === 'sun') particleCount = 150 // Subtle floating dust particles
+      if (theme === 'wave') particleCount = 300 // Firefly particles
+      if (theme === 'sparkle') particleCount = 280 // Glowing sparkle particles
       
       for (let i = 0; i < particleCount; i++) {
         let velocity = 0.8
-        if (theme === 'sun') velocity = 0.3
-        if (theme === 'wave') velocity = 0.4 // Slower drift for fireflies
+        if (theme === 'moon') velocity = 0.25 // Very slow drift for stars
+        if (theme === 'sun') velocity = 0.2 // Slow drift for dust
+        if (theme === 'wave') velocity = 0.4 // Moderate drift for fireflies
+        if (theme === 'sparkle') velocity = 0.35 // Slow drift for sparkles
         
         particles.push({
           x: Math.random() * canvas.width,
@@ -78,9 +82,12 @@ export function ThemeBackground() {
           vx: (Math.random() - 0.5) * velocity,
           vy: (Math.random() - 0.5) * velocity,
           brightness: Math.random(),
-          size: theme === 'wave' ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 1,
+          size: theme === 'moon' ? Math.random() * 1.2 + 0.4 : 
+                theme === 'sun' ? Math.random() * 1.8 + 0.6 :
+                theme === 'wave' ? Math.random() * 1.5 + 0.5 :
+                Math.random() * 1.6 + 0.5,
           cycle: Math.random() * Math.PI * 2,
-          depth: theme === 'wave' ? Math.random() : undefined,
+          depth: Math.random(),
         })
       }
       particlesRef.current = particles
@@ -135,10 +142,20 @@ export function ThemeBackground() {
           ctx.filter = 'none'
         })
       } else if (theme === 'moon') {
-        const bokehShapes = [
-          { x: canvas.width * 0.2, y: canvas.height * 0.3, r: 200, color: 'rgba(139, 92, 246, 0.06)' },
-          { x: canvas.width * 0.8, y: canvas.height * 0.7, r: 250, color: 'rgba(108, 92, 231, 0.05)' },
-          { x: canvas.width * 0.5, y: canvas.height * 0.1, r: 180, color: 'rgba(196, 181, 253, 0.04)' },
+        // Large blurred soft-white and pale blue bokeh circles at different depths
+        const bokehShapes: BokehCircle[] = [
+          // Background layer (deeper, more blurred)
+          { x: canvas.width * 0.15, y: canvas.height * 0.2, r: 320, color: 'rgba(203, 213, 225, 0.03)', blurRadius: 45, depth: 0.2 },
+          { x: canvas.width * 0.85, y: canvas.height * 0.75, r: 300, color: 'rgba(139, 92, 246, 0.04)', blurRadius: 42, depth: 0.25 },
+          
+          // Mid layer
+          { x: canvas.width * 0.5, y: canvas.height * 0.15, r: 280, color: 'rgba(168, 162, 255, 0.05)', blurRadius: 38, depth: 0.4 },
+          { x: canvas.width * 0.1, y: canvas.height * 0.85, r: 290, color: 'rgba(196, 181, 253, 0.04)', blurRadius: 40, depth: 0.35 },
+          { x: canvas.width * 0.9, y: canvas.height * 0.25, r: 270, color: 'rgba(203, 213, 225, 0.04)', blurRadius: 38, depth: 0.3 },
+          
+          // Foreground layer (sharper, more visible)
+          { x: canvas.width * 0.35, y: canvas.height * 0.55, r: 260, color: 'rgba(226, 232, 240, 0.06)', blurRadius: 35, depth: 0.6 },
+          { x: canvas.width * 0.7, y: canvas.height * 0.4, r: 240, color: 'rgba(168, 162, 255, 0.05)', blurRadius: 36, depth: 0.55 },
         ]
 
         bokehShapes.forEach((bokeh) => {
@@ -146,21 +163,44 @@ export function ThemeBackground() {
           gradient.addColorStop(0, bokeh.color)
           gradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
           ctx.fillStyle = gradient
+          ctx.filter = `blur(${bokeh.blurRadius}px)`
           ctx.fillRect(bokeh.x - bokeh.r, bokeh.y - bokeh.r, bokeh.r * 2, bokeh.r * 2)
+          ctx.filter = 'none'
         })
       } else if (theme === 'sun') {
-        // Golden light rays effect
-        const gradient = ctx.createLinearGradient(canvas.width / 2, 0, canvas.width / 2, canvas.height)
-        gradient.addColorStop(0, 'rgba(251, 146, 60, 0.05)')
-        gradient.addColorStop(0.5, 'rgba(250, 204, 21, 0.03)')
-        gradient.addColorStop(1, 'rgba(251, 191, 36, 0.02)')
-        ctx.fillStyle = gradient
+        // Soft sunbeam/light-ray streaks
+        const rayGradient = ctx.createLinearGradient(canvas.width * 0.3, -canvas.height * 0.2, canvas.width * 0.7, canvas.height * 1.2)
+        rayGradient.addColorStop(0, 'rgba(251, 191, 36, 0.06)')
+        rayGradient.addColorStop(0.3, 'rgba(251, 146, 60, 0.04)')
+        rayGradient.addColorStop(0.7, 'rgba(250, 204, 21, 0.03)')
+        rayGradient.addColorStop(1, 'rgba(252, 211, 77, 0.02)')
+        ctx.fillStyle = rayGradient
         ctx.fillRect(0, 0, canvas.width, canvas.height)
+        
+        // Additional subtle horizontal light rays
+        const horizontalRay = ctx.createLinearGradient(0, canvas.height * 0.25, canvas.width, canvas.height * 0.25)
+        horizontalRay.addColorStop(0, 'rgba(252, 211, 77, 0)')
+        horizontalRay.addColorStop(0.3, 'rgba(251, 191, 36, 0.03)')
+        horizontalRay.addColorStop(0.5, 'rgba(250, 204, 21, 0.04)')
+        horizontalRay.addColorStop(0.7, 'rgba(251, 146, 60, 0.03)')
+        horizontalRay.addColorStop(1, 'rgba(252, 211, 77, 0)')
+        ctx.fillStyle = horizontalRay
+        ctx.fillRect(0, canvas.height * 0.15, canvas.width, canvas.height * 0.2)
 
-        // Soft bokeh circles
-        const bokehShapes = [
-          { x: canvas.width * 0.3, y: canvas.height * 0.2, r: 150, color: 'rgba(251, 146, 60, 0.04)' },
-          { x: canvas.width * 0.7, y: canvas.height * 0.5, r: 180, color: 'rgba(250, 204, 21, 0.03)' },
+        // Large blurred peach and golden-yellow bokeh circles
+        const bokehShapes: BokehCircle[] = [
+          // Background layer
+          { x: canvas.width * 0.2, y: canvas.height * 0.15, r: 300, color: 'rgba(251, 191, 36, 0.05)', blurRadius: 42, depth: 0.25 },
+          { x: canvas.width * 0.8, y: canvas.height * 0.8, r: 320, color: 'rgba(251, 146, 60, 0.04)', blurRadius: 45, depth: 0.2 },
+          
+          // Mid layer
+          { x: canvas.width * 0.5, y: canvas.height * 0.25, r: 280, color: 'rgba(250, 204, 21, 0.06)', blurRadius: 38, depth: 0.45 },
+          { x: canvas.width * 0.15, y: canvas.height * 0.7, r: 270, color: 'rgba(251, 146, 60, 0.05)', blurRadius: 40, depth: 0.35 },
+          { x: canvas.width * 0.85, y: canvas.height * 0.3, r: 290, color: 'rgba(252, 211, 77, 0.04)', blurRadius: 39, depth: 0.3 },
+          
+          // Foreground layer
+          { x: canvas.width * 0.4, y: canvas.height * 0.6, r: 260, color: 'rgba(251, 191, 36, 0.07)', blurRadius: 35, depth: 0.6 },
+          { x: canvas.width * 0.65, y: canvas.height * 0.45, r: 250, color: 'rgba(250, 204, 21, 0.06)', blurRadius: 36, depth: 0.55 },
         ]
 
         bokehShapes.forEach((bokeh) => {
@@ -168,13 +208,25 @@ export function ThemeBackground() {
           gradient.addColorStop(0, bokeh.color)
           gradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
           ctx.fillStyle = gradient
+          ctx.filter = `blur(${bokeh.blurRadius}px)`
           ctx.fillRect(bokeh.x - bokeh.r, bokeh.y - bokeh.r, bokeh.r * 2, bokeh.r * 2)
+          ctx.filter = 'none'
         })
       } else if (theme === 'sparkle') {
-        const bokehShapes = [
-          { x: canvas.width * 0.2, y: canvas.height * 0.3, r: 200, color: 'rgba(217, 70, 239, 0.08)' },
-          { x: canvas.width * 0.8, y: canvas.height * 0.7, r: 250, color: 'rgba(196, 181, 253, 0.06)' },
-          { x: canvas.width * 0.5, y: canvas.height * 0.1, r: 180, color: 'rgba(240, 171, 252, 0.05)' },
+        // Large blurred lavender and pink bokeh circles at different depths
+        const bokehShapes: BokehCircle[] = [
+          // Background layer (deeper, more blurred)
+          { x: canvas.width * 0.15, y: canvas.height * 0.25, r: 310, color: 'rgba(196, 181, 253, 0.04)', blurRadius: 44, depth: 0.25 },
+          { x: canvas.width * 0.85, y: canvas.height * 0.75, r: 330, color: 'rgba(217, 70, 239, 0.05)', blurRadius: 46, depth: 0.2 },
+          
+          // Mid layer
+          { x: canvas.width * 0.5, y: canvas.height * 0.2, r: 290, color: 'rgba(240, 171, 252, 0.06)', blurRadius: 39, depth: 0.45 },
+          { x: canvas.width * 0.1, y: canvas.height * 0.8, r: 300, color: 'rgba(196, 181, 253, 0.04)', blurRadius: 41, depth: 0.35 },
+          { x: canvas.width * 0.9, y: canvas.height * 0.3, r: 280, color: 'rgba(217, 70, 239, 0.05)', blurRadius: 39, depth: 0.3 },
+          
+          // Foreground layer (sharper, more visible)
+          { x: canvas.width * 0.35, y: canvas.height * 0.55, r: 270, color: 'rgba(240, 171, 252, 0.07)', blurRadius: 36, depth: 0.6 },
+          { x: canvas.width * 0.7, y: canvas.height * 0.42, r: 260, color: 'rgba(196, 181, 253, 0.06)', blurRadius: 37, depth: 0.55 },
         ]
 
         bokehShapes.forEach((bokeh) => {
@@ -182,7 +234,9 @@ export function ThemeBackground() {
           gradient.addColorStop(0, bokeh.color)
           gradient.addColorStop(1, 'rgba(0, 0, 0, 0)')
           ctx.fillStyle = gradient
+          ctx.filter = `blur(${bokeh.blurRadius}px)`
           ctx.fillRect(bokeh.x - bokeh.r, bokeh.y - bokeh.r, bokeh.r * 2, bokeh.r * 2)
+          ctx.filter = 'none'
         })
       }
 
@@ -247,49 +301,97 @@ export function ThemeBackground() {
           ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2)
           ctx.fill()
         } else if (theme === 'moon') {
-          // Purple stars
-          const gradientGlow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size * 6)
-          gradientGlow.addColorStop(0, `rgba(196, 181, 253, ${brightness * 0.5})`)
-          gradientGlow.addColorStop(0.5, `rgba(139, 92, 246, ${brightness * 0.15})`)
-          gradientGlow.addColorStop(1, 'rgba(139, 92, 246, 0)')
-          ctx.fillStyle = gradientGlow
-          ctx.fillRect(particle.x - particle.size * 6, particle.y - particle.size * 6, particle.size * 12, particle.size * 12)
-
-          ctx.fillStyle = `rgba(196, 181, 253, ${brightness * 0.9})`
-          ctx.beginPath()
-          ctx.arc(particle.x, particle.y, particle.size * 0.8, 0, Math.PI * 2)
-          ctx.fill()
-        } else if (theme === 'sun') {
-          // Golden particles
-          const gradientGlow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size * 4)
-          gradientGlow.addColorStop(0, `rgba(251, 146, 60, ${brightness * 0.4})`)
-          gradientGlow.addColorStop(0.5, `rgba(251, 191, 36, ${brightness * 0.1})`)
-          gradientGlow.addColorStop(1, 'rgba(250, 204, 21, 0)')
-          ctx.fillStyle = gradientGlow
-          ctx.fillRect(particle.x - particle.size * 4, particle.y - particle.size * 4, particle.size * 8, particle.size * 8)
-
-          ctx.fillStyle = `rgba(251, 191, 36, ${brightness * 0.7})`
-          ctx.beginPath()
-          ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2)
-          ctx.fill()
-        } else if (theme === 'sparkle') {
-          // Magenta sparkles
-          const gradientGlow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size * 8)
-          gradientGlow.addColorStop(0, `rgba(240, 171, 252, ${brightness * 0.7})`)
-          gradientGlow.addColorStop(0.5, `rgba(217, 70, 239, ${brightness * 0.3})`)
-          gradientGlow.addColorStop(1, 'rgba(217, 70, 239, 0)')
-          ctx.fillStyle = gradientGlow
-          ctx.fillRect(particle.x - particle.size * 8, particle.y - particle.size * 8, particle.size * 16, particle.size * 16)
-
-          ctx.fillStyle = `rgba(240, 171, 252, ${brightness})`
-          ctx.beginPath()
-          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
-          ctx.fill()
-
-          // Inner bright core
-          ctx.fillStyle = `rgba(243, 232, 255, ${brightness * 0.8})`
+          // Twinkling white-blue star particles with gentle glow
+          // Outer glow: soft blue-white halo
+          const glowRadius = particle.size * 10
+          const glowGradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, glowRadius)
+          glowGradient.addColorStop(0, `rgba(203, 213, 225, ${brightness * 0.15})`)
+          glowGradient.addColorStop(0.4, `rgba(148, 163, 184, ${brightness * 0.06})`)
+          glowGradient.addColorStop(1, 'rgba(148, 163, 184, 0)')
+          ctx.fillStyle = glowGradient
+          ctx.fillRect(particle.x - glowRadius, particle.y - glowRadius, glowRadius * 2, glowRadius * 2)
+          
+          // Mid glow: pale blue tone
+          const midGlowRadius = particle.size * 5
+          const midGlow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, midGlowRadius)
+          midGlow.addColorStop(0, `rgba(168, 162, 255, ${brightness * 0.3})`)
+          midGlow.addColorStop(0.6, `rgba(139, 92, 246, ${brightness * 0.1})`)
+          midGlow.addColorStop(1, 'rgba(139, 92, 246, 0)')
+          ctx.fillStyle = midGlow
+          ctx.fillRect(particle.x - midGlowRadius, particle.y - midGlowRadius, midGlowRadius * 2, midGlowRadius * 2)
+          
+          // Core: bright star center
+          ctx.fillStyle = `rgba(240, 248, 255, ${brightness * 0.95})`
           ctx.beginPath()
           ctx.arc(particle.x, particle.y, particle.size * 0.6, 0, Math.PI * 2)
+          ctx.fill()
+          
+          // Inner bright point
+          ctx.fillStyle = `rgba(196, 181, 253, ${brightness})`
+          ctx.beginPath()
+          ctx.arc(particle.x, particle.y, particle.size * 0.3, 0, Math.PI * 2)
+          ctx.fill()
+        } else if (theme === 'sun') {
+          // Floating light particles like dust catching sunlight with warm glow
+          // Outer glow: warm golden halo
+          const glowRadius = particle.size * 9
+          const glowGradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, glowRadius)
+          glowGradient.addColorStop(0, `rgba(251, 191, 36, ${brightness * 0.2})`)
+          glowGradient.addColorStop(0.4, `rgba(252, 211, 77, ${brightness * 0.08})`)
+          glowGradient.addColorStop(1, 'rgba(250, 204, 21, 0)')
+          ctx.fillStyle = glowGradient
+          ctx.fillRect(particle.x - glowRadius, particle.y - glowRadius, glowRadius * 2, glowRadius * 2)
+          
+          // Mid glow: warmer peach tone
+          const midGlowRadius = particle.size * 5
+          const midGlow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, midGlowRadius)
+          midGlow.addColorStop(0, `rgba(251, 146, 60, ${brightness * 0.35})`)
+          midGlow.addColorStop(0.6, `rgba(251, 191, 36, ${brightness * 0.12})`)
+          midGlow.addColorStop(1, 'rgba(251, 146, 60, 0)')
+          ctx.fillStyle = midGlow
+          ctx.fillRect(particle.x - midGlowRadius, particle.y - midGlowRadius, midGlowRadius * 2, midGlowRadius * 2)
+          
+          // Core: soft glowing dust particle
+          ctx.fillStyle = `rgba(254, 243, 224, ${brightness * 0.85})`
+          ctx.beginPath()
+          ctx.arc(particle.x, particle.y, particle.size * 0.6, 0, Math.PI * 2)
+          ctx.fill()
+          
+          // Inner warm point
+          ctx.fillStyle = `rgba(251, 191, 36, ${brightness * 0.7})`
+          ctx.beginPath()
+          ctx.arc(particle.x, particle.y, particle.size * 0.3, 0, Math.PI * 2)
+          ctx.fill()
+        } else if (theme === 'sparkle') {
+          // Glowing sparkle/glitter particles with pink-purple shimmer
+          // Outer glow: soft pink-purple shimmer halo
+          const glowRadius = particle.size * 11
+          const glowGradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, glowRadius)
+          glowGradient.addColorStop(0, `rgba(240, 171, 252, ${brightness * 0.2})`)
+          glowGradient.addColorStop(0.4, `rgba(217, 70, 239, ${brightness * 0.08})`)
+          glowGradient.addColorStop(1, 'rgba(196, 181, 253, 0)')
+          ctx.fillStyle = glowGradient
+          ctx.fillRect(particle.x - glowRadius, particle.y - glowRadius, glowRadius * 2, glowRadius * 2)
+          
+          // Mid glow: vibrant magenta tone
+          const midGlowRadius = particle.size * 6
+          const midGlow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, midGlowRadius)
+          midGlow.addColorStop(0, `rgba(217, 70, 239, ${brightness * 0.4})`)
+          midGlow.addColorStop(0.6, `rgba(240, 171, 252, ${brightness * 0.15})`)
+          midGlow.addColorStop(1, 'rgba(217, 70, 239, 0)')
+          ctx.fillStyle = midGlow
+          ctx.fillRect(particle.x - midGlowRadius, particle.y - midGlowRadius, midGlowRadius * 2, midGlowRadius * 2)
+          
+          // Core: bright glowing sparkle center
+          ctx.fillStyle = `rgba(243, 232, 255, ${brightness * 0.95})`
+          ctx.beginPath()
+          ctx.arc(particle.x, particle.y, particle.size * 0.7, 0, Math.PI * 2)
+          ctx.fill()
+          
+          // Inner bright core with intense shimmer
+          ctx.fillStyle = `rgba(240, 171, 252, ${brightness})`
+          ctx.beginPath()
+          ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2)
           ctx.fill()
         }
       })
@@ -311,14 +413,18 @@ export function ThemeBackground() {
   const getBackgroundGradient = () => {
     switch (theme) {
       case 'moon':
-        return 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%)'
+        // Deep navy-to-black with indigo and violet undertones
+        return 'linear-gradient(135deg, #0a0a14 0%, #0d0f2d 25%, #1a1a3e 50%, #1a0f33 75%, #0f0a1a 100%)'
       case 'sun':
-        return 'linear-gradient(135deg, #faf5f0 0%, #fff8f3 50%, #fffbf7 100%)'
+        // Soft cream-to-warm-white with pale gold undertones
+        return 'linear-gradient(135deg, #fffaf2 0%, #fef8f0 25%, #fefbf7 50%, #fffbf0 75%, #faf5f0 100%)'
       case 'sparkle':
-        return 'linear-gradient(135deg, #0f0319 0%, #2d1b4e 50%, #1a0f33 100%)'
+        // Rich violet-to-magenta with deep purple undertones
+        return 'linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 25%, #3d1e5c 50%, #2d1b4e 75%, #16051a 100%)'
       case 'wave':
       default:
-        return 'linear-gradient(135deg, #08080c 0%, #0d1117 50%, #051828 100%)'
+        // Dark emerald-to-teal gradient
+        return 'linear-gradient(135deg, #0a4d3d 0%, #0d5f52 25%, #0a6b61 50%, #086e6e 75%, #0a5d68 100%)'
     }
   }
 

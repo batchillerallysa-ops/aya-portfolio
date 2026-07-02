@@ -91,7 +91,8 @@
 
 /* Moon/Dark theme */
 :root[data-theme="moon"] {
-  --background: #0a0a0a;
+  --background: linear-gradient(135deg, #0a0a14 0%, #0d0f2d 25%, #1a1a3e 50%, #1a0f33 75%, #0f0a1a 100%);
+  --background-fallback: #0a0a0a;
   --foreground: #f0f0f0;
   --card: #1a1a1a;
   --card-foreground: #f0f0f0;
@@ -129,7 +130,8 @@
 /* Sun/Light theme */
 :root[data-theme="sun"] {
   color-scheme: light;
-  --background: #fafafa;
+  --background: linear-gradient(135deg, #fffaf2 0%, #fef8f0 25%, #fefbf7 50%, #fffbf0 75%, #faf5f0 100%);
+  --background-fallback: #fafafa;
   --foreground: #1a1a1a;
   --card: #ffffff;
   --card-foreground: #1a1a1a;
@@ -166,7 +168,8 @@
 
 /* Sparkle/Special theme */
 :root[data-theme="sparkle"] {
-  --background: #0f0319;
+  --background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 25%, #3d1e5c 50%, #2d1b4e 75%, #16051a 100%);
+  --background-fallback: #0f0319;
   --foreground: #f3f0ff;
   --card: #1a0f33;
   --card-foreground: #f3f0ff;
