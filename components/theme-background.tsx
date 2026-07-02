@@ -116,20 +116,20 @@ export function ThemeBackground() {
 
       // Draw bokeh/gradient circles based on theme
       if (theme === 'wave') {
-        // Large blurred cyan/turquoise bokeh circles at different depths for cinematic effect
+        // Large blurred bright cyan/bright blue bokeh circles at different depths for cinematic effect
         const bokehShapes: BokehCircle[] = [
           // Background layer (deeper, more blurred)
-          { x: canvas.width * 0.15, y: canvas.height * 0.25, r: 300, color: 'rgba(16, 185, 129, 0.04)', blurRadius: 40, depth: 0.3 },
-          { x: canvas.width * 0.85, y: canvas.height * 0.75, r: 350, color: 'rgba(6, 182, 212, 0.05)', blurRadius: 45, depth: 0.2 },
+          { x: canvas.width * 0.15, y: canvas.height * 0.25, r: 300, color: 'rgba(0, 200, 200, 0.08)', blurRadius: 40, depth: 0.3 },
+          { x: canvas.width * 0.85, y: canvas.height * 0.75, r: 350, color: 'rgba(0, 180, 220, 0.09)', blurRadius: 45, depth: 0.2 },
           
           // Mid layer
-          { x: canvas.width * 0.5, y: canvas.height * 0.2, r: 280, color: 'rgba(34, 211, 238, 0.06)', blurRadius: 35, depth: 0.5 },
-          { x: canvas.width * 0.1, y: canvas.height * 0.8, r: 320, color: 'rgba(6, 182, 212, 0.04)', blurRadius: 42, depth: 0.4 },
-          { x: canvas.width * 0.9, y: canvas.height * 0.3, r: 300, color: 'rgba(34, 211, 238, 0.05)', blurRadius: 38, depth: 0.35 },
+          { x: canvas.width * 0.5, y: canvas.height * 0.2, r: 280, color: 'rgba(30, 210, 255, 0.10)', blurRadius: 35, depth: 0.5 },
+          { x: canvas.width * 0.1, y: canvas.height * 0.8, r: 320, color: 'rgba(0, 200, 220, 0.07)', blurRadius: 42, depth: 0.4 },
+          { x: canvas.width * 0.9, y: canvas.height * 0.3, r: 300, color: 'rgba(40, 220, 255, 0.09)', blurRadius: 38, depth: 0.35 },
           
           // Foreground layer (sharper, more visible)
-          { x: canvas.width * 0.35, y: canvas.height * 0.6, r: 250, color: 'rgba(103, 232, 249, 0.07)', blurRadius: 32, depth: 0.7 },
-          { x: canvas.width * 0.7, y: canvas.height * 0.45, r: 270, color: 'rgba(22, 163, 74, 0.05)', blurRadius: 36, depth: 0.6 },
+          { x: canvas.width * 0.35, y: canvas.height * 0.6, r: 250, color: 'rgba(60, 240, 255, 0.12)', blurRadius: 32, depth: 0.7 },
+          { x: canvas.width * 0.7, y: canvas.height * 0.45, r: 270, color: 'rgba(20, 220, 255, 0.10)', blurRadius: 36, depth: 0.6 },
         ]
 
         bokehShapes.forEach((bokeh) => {
@@ -270,33 +270,33 @@ export function ThemeBackground() {
 
         // Draw particles based on theme
         if (theme === 'wave') {
-          // Tiny glowing firefly particles with soft yellow-green light
-          // Outer glow: soft yellow-green halo
+          // Tiny glowing firefly particles with bright green light
+          // Outer glow: bright green halo
           const glowRadius = particle.size * 12
           const glowGradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, glowRadius)
-          glowGradient.addColorStop(0, `rgba(132, 204, 22, ${brightness * 0.25})`)
-          glowGradient.addColorStop(0.4, `rgba(163, 230, 53, ${brightness * 0.1})`)
-          glowGradient.addColorStop(1, 'rgba(187, 247, 208, 0)')
+          glowGradient.addColorStop(0, `rgba(0, 255, 100, ${brightness * 0.30})`)
+          glowGradient.addColorStop(0.4, `rgba(50, 255, 120, ${brightness * 0.12})`)
+          glowGradient.addColorStop(1, 'rgba(100, 255, 180, 0)')
           ctx.fillStyle = glowGradient
           ctx.fillRect(particle.x - glowRadius, particle.y - glowRadius, glowRadius * 2, glowRadius * 2)
           
-          // Mid glow: warmer yellow tone
+          // Mid glow: bright green tone
           const midGlowRadius = particle.size * 6
           const midGlow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, midGlowRadius)
-          midGlow.addColorStop(0, `rgba(202, 210, 23, ${brightness * 0.4})`)
-          midGlow.addColorStop(0.6, `rgba(251, 191, 36, ${brightness * 0.15})`)
-          midGlow.addColorStop(1, 'rgba(253, 224, 71, 0)')
+          midGlow.addColorStop(0, `rgba(0, 255, 100, ${brightness * 0.45})`)
+          midGlow.addColorStop(0.6, `rgba(30, 255, 150, ${brightness * 0.18})`)
+          midGlow.addColorStop(1, 'rgba(100, 255, 180, 0)')
           ctx.fillStyle = midGlow
           ctx.fillRect(particle.x - midGlowRadius, particle.y - midGlowRadius, midGlowRadius * 2, midGlowRadius * 2)
           
-          // Core: bright yellow-green firefly center
-          ctx.fillStyle = `rgba(240, 253, 250, ${brightness * 0.95})`
+          // Core: bright white-green firefly center
+          ctx.fillStyle = `rgba(255, 255, 255, ${brightness * 0.95})`
           ctx.beginPath()
           ctx.arc(particle.x, particle.y, particle.size * 0.8, 0, Math.PI * 2)
           ctx.fill()
           
-          // Inner bright core for intensity
-          ctx.fillStyle = `rgba(134, 239, 172, ${brightness})`
+          // Inner bright core - vivid green
+          ctx.fillStyle = `rgba(0, 255, 100, ${brightness})`
           ctx.beginPath()
           ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2)
           ctx.fill()
