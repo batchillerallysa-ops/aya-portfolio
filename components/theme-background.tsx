@@ -423,8 +423,8 @@ export function ThemeBackground() {
         return 'linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 25%, #3d1e5c 50%, #2d1b4e 75%, #16051a 100%)'
       case 'wave':
       default:
-        // Dark emerald-to-teal gradient
-        return 'linear-gradient(135deg, #0a4d3d 0%, #0d5f52 25%, #0a6b61 50%, #086e6e 75%, #0a5d68 100%)'
+        // Bright cyan/teal gradient flowing horizontally
+        return 'linear-gradient(90deg, #001a2e 0%, #003d52 12%, #004d5c 24%, #006b7d 36%, #007a8f 48%, #008fa3 60%, #0099b3 72%, #00a8c4 84%, #00b8d4 100%)'
     }
   }
 
