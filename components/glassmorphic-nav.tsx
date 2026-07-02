@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X, Moon, Sparkles, Sunset, Waves } from 'lucide-react'
+import { Menu, X, Moon, Sparkles, Sun, Waves } from 'lucide-react'
 
 const NAV_ITEMS = [
   { label: 'About', href: '#about' },
@@ -12,19 +12,45 @@ const NAV_ITEMS = [
   { label: 'Contact', href: '#contact' },
 ]
 
-const ACCENTS = [
-  { id: 'amber', label: 'Amber theme', Icon: Moon },
-  { id: 'violet', label: 'Violet theme', Icon: Sparkles },
-  { id: 'sunset', label: 'Sunset theme', Icon: Sunset },
-  { id: 'cyan', label: 'Cyan theme', Icon: Waves },
+const THEMES = [
+  { id: 'wave', label: 'Wave (Teal/Ocean)', Icon: Waves },
+  { id: 'sparkle', label: 'Sparkle (Special)', Icon: Sparkles },
+  { id: 'sun', label: 'Sun (Light)', Icon: Sun },
+  { id: 'moon', label: 'Moon (Dark)', Icon: Moon },
 ] as const
 
-type AccentId = (typeof ACCENTS)[number]['id']
+type ThemeId = (typeof THEMES)[number]['id']
+
+const STORAGE_KEY = 'theme-preference'
 
 export function GlassmorphicNav() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [accent, setAccent] = useState<AccentId>('amber')
+  const [theme, setTheme] = useState<ThemeId>('wave')
+  const [mounted, setMounted] = useState(false)
+
+  // Initialize theme on mount
+  useEffect(() => {
+    setMounted(true)
+    const savedTheme = localStorage.getItem(STORAGE_KEY) as ThemeId | null
+    const initialTheme = savedTheme || 'wave'
+    setTheme(initialTheme)
+    applyTheme(initialTheme)
+  }, [])
+
+  const applyTheme = (newTheme: ThemeId) => {
+    if (newTheme === 'wave') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', newTheme)
+    }
+  }
+
+  const handleThemeChange = (newTheme: ThemeId) => {
+    setTheme(newTheme)
+    applyTheme(newTheme)
+    localStorage.setItem(STORAGE_KEY, newTheme)
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,14 +59,6 @@ export function GlassmorphicNav() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  useEffect(() => {
-    if (accent === 'amber') {
-      document.documentElement.removeAttribute('data-accent')
-    } else {
-      document.documentElement.setAttribute('data-accent', accent)
-    }
-  }, [accent])
 
   return (
     <nav
@@ -83,28 +101,30 @@ export function GlassmorphicNav() {
           </div>
 
           <div className="flex items-center gap-3">
-            {/* Accent / theme switcher pill */}
-            <div className="hidden sm:flex items-center gap-1 rounded-full border border-border bg-card/60 p-1 backdrop-blur-sm">
-              {ACCENTS.map(({ id, label, Icon }) => {
-                const active = accent === id
-                return (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => setAccent(id)}
-                    aria-label={label}
-                    aria-pressed={active}
-                    className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${
-                      active
-                        ? 'bg-gradient-to-br from-primary to-secondary text-primary-foreground shadow-[0_0_16px_-2px] shadow-primary/60'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5'
-                    }`}
-                  >
-                    <Icon className="h-4 w-4" />
-                  </button>
-                )
-              })}
-            </div>
+            {/* Theme switcher pill */}
+            {mounted && (
+              <div className="hidden sm:flex items-center gap-1 rounded-full border border-border bg-card/60 p-1 backdrop-blur-sm">
+                {THEMES.map(({ id, label, Icon }) => {
+                  const active = theme === id
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => handleThemeChange(id)}
+                      aria-label={label}
+                      aria-pressed={active}
+                      className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${
+                        active
+                          ? 'bg-gradient-to-br from-primary to-secondary text-primary-foreground shadow-[0_0_16px_-2px] shadow-primary/60'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5'
+                      }`}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </button>
+                  )
+                })}
+              </div>
+            )}
 
             {/* CTA Button */}
             <Link
@@ -146,28 +166,33 @@ export function GlassmorphicNav() {
                 </Link>
               ))}
 
-              {/* Accent switcher (mobile) */}
-              <div className="flex items-center gap-1 rounded-full border border-border bg-card/60 p-1 w-max">
-                {ACCENTS.map(({ id, label, Icon }) => {
-                  const active = accent === id
-                  return (
-                    <button
-                      key={id}
-                      type="button"
-                      onClick={() => setAccent(id)}
-                      aria-label={label}
-                      aria-pressed={active}
-                      className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${
-                        active
-                          ? 'bg-gradient-to-br from-primary to-secondary text-primary-foreground'
-                          : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5'
-                      }`}
-                    >
-                      <Icon className="h-4 w-4" />
-                    </button>
-                  )
-                })}
-              </div>
+              {/* Theme switcher (mobile) */}
+              {mounted && (
+                <div className="flex items-center gap-1 rounded-full border border-border bg-card/60 p-1 w-max">
+                  {THEMES.map(({ id, label, Icon }) => {
+                    const active = theme === id
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => {
+                          handleThemeChange(id)
+                          setIsOpen(false)
+                        }}
+                        aria-label={label}
+                        aria-pressed={active}
+                        className={`flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 ${
+                          active
+                            ? 'bg-gradient-to-br from-primary to-secondary text-primary-foreground'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5'
+                        }`}
+                      >
+                        <Icon className="h-4 w-4" />
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
 
               <Link
                 href="https://calendly.com/allysa-batchiller57/30min"
