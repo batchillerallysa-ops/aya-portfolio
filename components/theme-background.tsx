@@ -66,14 +66,14 @@ export function ThemeBackground() {
       
       if (theme === 'moon') particleCount = 250 // Hundreds of star particles
       if (theme === 'sun') particleCount = 150 // Subtle floating dust particles
-      if (theme === 'wave') particleCount = 300 // Firefly particles
+      if (theme === 'wave') particleCount = 80 // Minimal delicate star particles
       if (theme === 'sparkle') particleCount = 280 // Glowing sparkle particles
       
       for (let i = 0; i < particleCount; i++) {
         let velocity = 0.8
         if (theme === 'moon') velocity = 0.25 // Very slow drift for stars
         if (theme === 'sun') velocity = 0.2 // Slow drift for dust
-        if (theme === 'wave') velocity = 0.4 // Moderate drift for fireflies
+        if (theme === 'wave') velocity = 0.08 // Very slow drift for delicate stars
         if (theme === 'sparkle') velocity = 0.35 // Slow drift for sparkles
         
         particles.push({
@@ -84,7 +84,7 @@ export function ThemeBackground() {
           brightness: Math.random(),
           size: theme === 'moon' ? Math.random() * 1.2 + 0.4 : 
                 theme === 'sun' ? Math.random() * 1.8 + 0.6 :
-                theme === 'wave' ? Math.random() * 1.5 + 0.5 :
+                theme === 'wave' ? Math.random() * 0.8 + 0.3 :
                 Math.random() * 1.6 + 0.5,
           cycle: Math.random() * Math.PI * 2,
           depth: Math.random(),
@@ -116,20 +116,11 @@ export function ThemeBackground() {
 
       // Draw bokeh/gradient circles based on theme
       if (theme === 'wave') {
-        // Large blurred bright cyan/bright blue bokeh circles at different depths for cinematic effect
+        // Minimal subtle bokeh circles for clean aesthetic
         const bokehShapes: BokehCircle[] = [
-          // Background layer (deeper, more blurred)
-          { x: canvas.width * 0.15, y: canvas.height * 0.25, r: 300, color: 'rgba(0, 200, 200, 0.08)', blurRadius: 40, depth: 0.3 },
-          { x: canvas.width * 0.85, y: canvas.height * 0.75, r: 350, color: 'rgba(0, 180, 220, 0.09)', blurRadius: 45, depth: 0.2 },
-          
-          // Mid layer
-          { x: canvas.width * 0.5, y: canvas.height * 0.2, r: 280, color: 'rgba(30, 210, 255, 0.10)', blurRadius: 35, depth: 0.5 },
-          { x: canvas.width * 0.1, y: canvas.height * 0.8, r: 320, color: 'rgba(0, 200, 220, 0.07)', blurRadius: 42, depth: 0.4 },
-          { x: canvas.width * 0.9, y: canvas.height * 0.3, r: 300, color: 'rgba(40, 220, 255, 0.09)', blurRadius: 38, depth: 0.35 },
-          
-          // Foreground layer (sharper, more visible)
-          { x: canvas.width * 0.35, y: canvas.height * 0.6, r: 250, color: 'rgba(60, 240, 255, 0.12)', blurRadius: 32, depth: 0.7 },
-          { x: canvas.width * 0.7, y: canvas.height * 0.45, r: 270, color: 'rgba(20, 220, 255, 0.10)', blurRadius: 36, depth: 0.6 },
+          // Very subtle background layer
+          { x: canvas.width * 0.2, y: canvas.height * 0.3, r: 280, color: 'rgba(0, 180, 200, 0.04)', blurRadius: 45, depth: 0.2 },
+          { x: canvas.width * 0.8, y: canvas.height * 0.7, r: 300, color: 'rgba(0, 160, 180, 0.03)', blurRadius: 50, depth: 0.15 },
         ]
 
         bokehShapes.forEach((bokeh) => {
@@ -270,35 +261,19 @@ export function ThemeBackground() {
 
         // Draw particles based on theme
         if (theme === 'wave') {
-          // Tiny glowing firefly particles with bright green light
-          // Outer glow: bright green halo
-          const glowRadius = particle.size * 12
+          // Simple elegant golden star particles with minimal glow
+          // Soft outer glow
+          const glowRadius = particle.size * 4
           const glowGradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, glowRadius)
-          glowGradient.addColorStop(0, `rgba(0, 255, 100, ${brightness * 0.30})`)
-          glowGradient.addColorStop(0.4, `rgba(50, 255, 120, ${brightness * 0.12})`)
-          glowGradient.addColorStop(1, 'rgba(100, 255, 180, 0)')
+          glowGradient.addColorStop(0, `rgba(255, 215, 0, ${brightness * 0.2})`)
+          glowGradient.addColorStop(1, 'rgba(255, 215, 0, 0)')
           ctx.fillStyle = glowGradient
           ctx.fillRect(particle.x - glowRadius, particle.y - glowRadius, glowRadius * 2, glowRadius * 2)
           
-          // Mid glow: bright green tone
-          const midGlowRadius = particle.size * 6
-          const midGlow = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, midGlowRadius)
-          midGlow.addColorStop(0, `rgba(0, 255, 100, ${brightness * 0.45})`)
-          midGlow.addColorStop(0.6, `rgba(30, 255, 150, ${brightness * 0.18})`)
-          midGlow.addColorStop(1, 'rgba(100, 255, 180, 0)')
-          ctx.fillStyle = midGlow
-          ctx.fillRect(particle.x - midGlowRadius, particle.y - midGlowRadius, midGlowRadius * 2, midGlowRadius * 2)
-          
-          // Core: bright white-green firefly center
-          ctx.fillStyle = `rgba(255, 255, 255, ${brightness * 0.95})`
+          // Bright golden star center
+          ctx.fillStyle = `rgba(255, 228, 100, ${brightness * 0.9})`
           ctx.beginPath()
-          ctx.arc(particle.x, particle.y, particle.size * 0.8, 0, Math.PI * 2)
-          ctx.fill()
-          
-          // Inner bright core - vivid green
-          ctx.fillStyle = `rgba(0, 255, 100, ${brightness})`
-          ctx.beginPath()
-          ctx.arc(particle.x, particle.y, particle.size * 0.4, 0, Math.PI * 2)
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
           ctx.fill()
         } else if (theme === 'moon') {
           // Twinkling white-blue star particles with gentle glow
