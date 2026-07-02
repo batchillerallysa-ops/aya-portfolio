@@ -58,9 +58,12 @@ export function Services() {
           {SERVICES.map((service) => (
             <div
               key={service.title}
-              className="group rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/50"
+              className="group relative rounded-2xl border border-border/60 bg-card/40 p-6 backdrop-blur-xl transition-all duration-300 hover:border-primary/50 hover:bg-card/50 hover:shadow-[0_8px_32px_0_rgba(6,182,212,0.15)]"
             >
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              {/* Cinematic glow effect on hover */}
+              <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 text-primary shadow-lg shadow-primary/20 transition-transform duration-300 group-hover:scale-110 group-hover:bg-primary/20">
                 <service.icon className="h-5 w-5" />
               </span>
               <h3 className="mt-5 font-heading text-lg font-semibold">{service.title}</h3>

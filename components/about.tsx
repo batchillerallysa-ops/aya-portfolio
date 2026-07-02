@@ -27,15 +27,18 @@ export function About() {
             {/* ambient glow behind the frame */}
             <div className="ambient-glow pointer-events-none absolute -inset-6 -z-10 rounded-[2rem] blur-2xl" aria-hidden="true" />
 
-            <div className="terminal-frame group relative overflow-hidden rounded-2xl">
-              {/* top accent bar */}
-              <div className="top-gradient-bar h-[3px] w-full" aria-hidden="true" />
+            <div className="terminal-frame group relative overflow-hidden rounded-2xl border border-primary/20 bg-card/40 backdrop-blur-xl shadow-[0_24px_64px_0_rgba(6,182,212,0.08)]">
+              {/* Cinematic glow effect */}
+              <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              
+              {/* top accent bar with glow */}
+              <div className="top-gradient-bar h-[3px] w-full bg-gradient-to-r from-primary via-secondary to-accent shadow-[0_0_16px_-2px] shadow-primary/40" aria-hidden="true" />
 
               {/* window title row */}
-              <div className="flex items-center gap-2 border-b border-border/60 px-4 py-3">
-                <span className="h-3 w-3 rounded-full bg-destructive/80" aria-hidden="true" />
-                <span className="h-3 w-3 rounded-full bg-secondary" aria-hidden="true" />
-                <span className="h-3 w-3 rounded-full bg-primary" aria-hidden="true" />
+              <div className="flex items-center gap-2 border-b border-primary/10 px-4 py-3 backdrop-blur-sm">
+                <span className="h-3 w-3 rounded-full bg-destructive/80 shadow-lg shadow-destructive/40" aria-hidden="true" />
+                <span className="h-3 w-3 rounded-full bg-secondary shadow-lg shadow-secondary/40" aria-hidden="true" />
+                <span className="h-3 w-3 rounded-full bg-primary shadow-lg shadow-primary/40" aria-hidden="true" />
                 <span className="ml-2 font-mono text-xs text-muted-foreground">allysa@portfolio: ~/about</span>
               </div>
 
@@ -105,7 +108,13 @@ export function About() {
             {/* stat cards */}
             <div className="mt-8 grid grid-cols-3 gap-3">
               {STATS.map((stat) => (
-                <div key={stat.label} className="glassmorphic-hover rounded-xl p-4 text-center">
+                <div 
+                  key={stat.label} 
+                  className="group relative rounded-xl border border-primary/20 bg-primary/8 p-4 text-center backdrop-blur-md transition-all duration-300 hover:border-primary/40 hover:bg-primary/12 hover:shadow-[0_8px_24px_0_rgba(6,182,212,0.1)]"
+                >
+                  {/* Cinematic glow on hover */}
+                  <div className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-t from-primary/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  
                   <p className="font-heading text-2xl font-bold text-primary">{stat.value}</p>
                   <p className="mt-1 text-xs leading-snug text-muted-foreground">{stat.label}</p>
                 </div>

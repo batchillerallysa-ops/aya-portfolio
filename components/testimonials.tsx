@@ -26,7 +26,7 @@ const TESTIMONIALS = [
 
 export function Testimonials() {
   return (
-    <section id="testimonials" className="scroll-mt-20 border-t border-border bg-card/30">
+    <section id="testimonials" className="scroll-mt-20 border-t border-border bg-card/20">
       <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
         <div className="max-w-2xl">
           <p className="text-sm font-medium uppercase tracking-widest text-primary">Testimonials</p>
@@ -39,13 +39,16 @@ export function Testimonials() {
           {TESTIMONIALS.map((t) => (
             <figure
               key={t.name}
-              className="flex flex-col rounded-2xl border border-border bg-card p-6"
+              className="group flex flex-col rounded-2xl border border-primary/15 bg-card/40 p-6 backdrop-blur-lg transition-all duration-300 hover:border-primary/40 hover:bg-card/50 hover:shadow-[0_12px_40px_-4px_rgba(6,182,212,0.12)]"
             >
-              <Quote className="h-7 w-7 flex-none text-primary/60" aria-hidden="true" />
+              {/* Cinematic glow background */}
+              <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              
+              <Quote className="h-7 w-7 flex-none text-primary/60 transition-colors duration-300 group-hover:text-primary/80" aria-hidden="true" />
               <blockquote className="mt-4 flex-1 text-pretty text-sm leading-relaxed text-foreground/90">
                 {t.quote}
               </blockquote>
-              <figcaption className="mt-6 border-t border-border pt-4">
+              <figcaption className="mt-6 border-t border-primary/10 pt-4">
                 <p className="font-heading text-sm font-semibold">{t.name}</p>
                 <p className="text-xs text-muted-foreground">{t.title}</p>
                 <p className="text-xs text-primary">{t.company}</p>

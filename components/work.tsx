@@ -39,17 +39,20 @@ export function Work() {
               <Link
                 key={project.slug}
                 href={`/projects/${project.tool}/${project.slug}`}
-                className="group relative flex flex-col rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg"
+                className="group relative flex flex-col rounded-2xl border border-border/50 bg-card/40 p-6 backdrop-blur-lg transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:bg-card/50 hover:shadow-[0_16px_40px_-4px_rgba(6,182,212,0.12)]"
               >
+                {/* Cinematic depth glow */}
+                <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                
                 <div className="flex items-center justify-between">
                   <span
-                    className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold"
+                    className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold shadow-lg transition-transform duration-300 group-hover:scale-105"
                     style={{ backgroundColor: tool.tint, color: tool.color }}
                   >
                     <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: tool.color }} />
                     {tool.name}
                   </span>
-                  <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+                  <ArrowUpRight className="h-5 w-5 text-muted-foreground transition-all duration-300 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </div>
 
                 <h3 className="mt-5 font-heading text-lg font-semibold leading-snug text-balance">
@@ -57,9 +60,9 @@ export function Work() {
                 </h3>
                 <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{project.tagline}</p>
 
-                <div className="mt-5 flex flex-wrap gap-1.5 border-t border-border pt-4">
+                <div className="mt-5 flex flex-wrap gap-1.5 border-t border-primary/10 pt-4">
                   {project.techStack.slice(0, 3).map((tech) => (
-                    <span key={tech} className="rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground">
+                    <span key={tech} className="rounded-md bg-primary/8 px-2 py-1 text-xs text-muted-foreground backdrop-blur-sm">
                       {tech}
                     </span>
                   ))}
